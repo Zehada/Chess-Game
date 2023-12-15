@@ -1,0 +1,22 @@
+body {
+    margin: 0;
+}
+
+
+
+.chessboard-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: black;
+
+    .chessboard {
+        width: 1000px;
+        background-color: darkslateblue;
+        max-width: 90vh;
+        max-height: 90vh;
+        aspect-ratio: 1 / 1;
+    }
+}
