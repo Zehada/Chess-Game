@@ -48,4 +48,56 @@ class Piece {
     square.appendChild(piece);
   }
 
+  move(piece) {
+    if (this.color == "white") {
+      if (this.type == "king") {
+
+      } else if (this.type == "queen") {
+
+      } else if (this.type == "rook") {
+
+      } else if (this.type == "bishop") {
+
+      } else if (this.type == "knight") {
+
+      } else if (this.type == "pawn") {
+
+        let parentDiv = piece.parentElement.className;
+        let parentDivNumber = Array.from(parentDiv)[1];
+        parentDivNumber = parseInt(parentDivNumber);
+        let parentDivNumberPlusOne = parentDivNumber + 1;
+        let moveClassName = Array.from(parentDiv)[0] + parentDivNumberPlusOne.toString();
+        let nextMoveDiv = document.querySelector("." + moveClassName);
+        let moveButton = document.createElement("div");
+        moveButton.classList.add("next-move");
+        nextMoveDiv.appendChild(moveButton);
+
+
+
+        // if (click == 1) {
+        //   selectedPiece.classList.remove("selected");
+        // }
+
+
+
+
+
+      }
+    } else if (this.color == "black") {
+      if (this.type == "king") {
+
+      } else if (this.type == "queen") {
+
+      } else if (this.type == "rook") {
+
+      } else if (this.type == "bishop") {
+
+      } else if (this.type == "knight") {
+
+      } else if (this.type == "pawn") {
+
+      }
+    }
+  }
+
 }

@@ -8,6 +8,28 @@ const knightsLetters = ["c", "f"];
 
 let chessboardNumber = 8;
 
+
+
+// document.addEventListener("click", removeNextMoveDivs);
+
+// function removeNextMoveDivs(e) {
+//     let selectedElement = document.querySelector(".selected");
+
+//     if (selectedElement == null) {
+//         e.target.classList.add("selected");
+//     } else if (e.target.classList.contains("selected")) {
+//         e.target.classList.remove("selected");
+//     } else if (selectedElement !== null) {
+//         selectedElement.classList.remove("selected");
+//         e.target.classList.add("selected");
+//     }
+
+//     console.log(selectedElement)
+// }
+
+
+
+
 for (let i = 0; i < 8; i++) {
 
     if (i % 2 == 0) {
@@ -54,6 +76,7 @@ for (let i = 0; i < 8; i++) {
 let quantity = 1
 let piece;
 
+let whitePawn;
 for (let letter of chessboardLetters) {
     whitePawn = new Piece("white", "pawn");
     whitePawn.initPiece(quantity);
@@ -66,6 +89,12 @@ for (let letter of chessboardLetters) {
     quantity++;
 
 }
+
+// console.log(piece)
+// let whitePawns = document.querySelectorAll(".white-pawn");
+// whitePawns.forEach(piece => {
+//     whitePawn.move(piece);
+// })
 
 quantity = 1;
 
@@ -169,3 +198,34 @@ blackQueen.firstPosition(chessboardLetters[3], "8");
 
 // })
 
+document.addEventListener("click", removeNextMoveDivs);
+
+function removeNextMoveDivs(e) {
+    let selectedElement = document.querySelector(".selected");
+    let nextMoves = document.querySelectorAll(".next-move");
+
+    if (selectedElement == null) {
+        nextMoves.forEach(nextMove => nextMove.remove());
+        e.target.classList.add("selected");
+        selectedElement = document.querySelector(".selected");
+
+
+    } else if (e.target.classList.contains("selected")) {
+        e.target.classList.remove("selected");
+        selectedElement = document.querySelector(".selected");
+        nextMoves.forEach(nextMove => nextMove.remove());
+    } else if (selectedElement !== null) {
+        selectedElement.classList.remove("selected");
+        e.target.classList.add("selected");
+        selectedElement = document.querySelector(".selected");
+        nextMoves.forEach(nextMove => nextMove.remove());
+
+    }
+
+    if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
+        whitePawn.move(selectedElement);
+    }
+    console.log(selectedElement)
+
+
+}
