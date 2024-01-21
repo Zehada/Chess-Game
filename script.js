@@ -204,6 +204,19 @@ function removeNextMoveDivs(e) {
     let selectedElement = document.querySelector(".selected");
     let nextMoves = document.querySelectorAll(".next-move");
 
+
+
+    nextMoves.forEach(nextMove => {
+        if (nextMove && (e.target == nextMove.parentElement || e.target == nextMove)) {
+            console.log("hello");
+            let clonedElement = selectedElement.cloneNode();
+            clonedElement.classList.remove("selected");
+            console.log(clonedElement)
+            nextMove.parentElement.appendChild(clonedElement);
+            selectedElement.remove();
+        }
+    })
+
     if (selectedElement == null) {
         nextMoves.forEach(nextMove => nextMove.remove());
         e.target.classList.add("selected");
@@ -219,13 +232,14 @@ function removeNextMoveDivs(e) {
         e.target.classList.add("selected");
         selectedElement = document.querySelector(".selected");
         nextMoves.forEach(nextMove => nextMove.remove());
-
     }
 
     if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
-        whitePawn.move(selectedElement);
+        whitePawn.move(e.target);
     }
-    console.log(selectedElement)
+
+
+
 
 
 }
