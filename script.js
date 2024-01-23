@@ -198,9 +198,9 @@ blackQueen.firstPosition(chessboardLetters[3], "8");
 
 // })
 
-document.addEventListener("click", removeNextMoveDivs);
+document.addEventListener("click", nextMove);
 
-function removeNextMoveDivs(e) {
+function nextMove(e) {
     let selectedElement = document.querySelector(".selected");
     let nextMoves = document.querySelectorAll(".next-move");
 
@@ -236,7 +236,11 @@ function removeNextMoveDivs(e) {
 
     if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
         whitePawn.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
+        whiteQueen.move(e.target);
     }
+
+
 
 
 
