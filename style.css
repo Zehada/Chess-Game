@@ -27,6 +27,15 @@ body {
             display: flex;
             justify-content: center;
             align-items: center;
+            position: relative;
+
+            .next-move {
+                position: absolute;
+                background-color: rgba(128, 128, 128, 0.5);
+                width: 35%;
+                height: 35%;
+                border-radius: 50%;
+            }
 
         }
     }
@@ -34,10 +43,4 @@ body {
 
 img {
     width: 100%;
-}
-
-.next-move {
-    background-color: gray;
-    width: 50%;
-    height: 50%;
 }

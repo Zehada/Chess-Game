@@ -10,26 +10,7 @@ let chessboardNumber = 8;
 
 
 
-// document.addEventListener("click", removeNextMoveDivs);
-
-// function removeNextMoveDivs(e) {
-//     let selectedElement = document.querySelector(".selected");
-
-//     if (selectedElement == null) {
-//         e.target.classList.add("selected");
-//     } else if (e.target.classList.contains("selected")) {
-//         e.target.classList.remove("selected");
-//     } else if (selectedElement !== null) {
-//         selectedElement.classList.remove("selected");
-//         e.target.classList.add("selected");
-//     }
-
-//     console.log(selectedElement)
-// }
-
-
-
-
+// Creates chessboard
 for (let i = 0; i < 8; i++) {
 
     if (i % 2 == 0) {
@@ -89,12 +70,6 @@ for (let letter of chessboardLetters) {
     quantity++;
 
 }
-
-// console.log(piece)
-// let whitePawns = document.querySelectorAll(".white-pawn");
-// whitePawns.forEach(piece => {
-//     whitePawn.move(piece);
-// })
 
 quantity = 1;
 
@@ -160,51 +135,12 @@ blackQueen.firstPosition(chessboardLetters[3], "8");
 
 
 
-// let whitePawnIndex = 1;
-
-// for (let letter of chessboardLetters) {
-//     let square = document.querySelector("." + letter + "2");
-//     let whitePawn = document.createElement("img");
-//     whitePawn.classList.add("white-pawn", "white-pawn-" + whitePawnIndex);
-//     whitePawn.src = "img/Chess_plt45.svg"
-//     square.appendChild(whitePawn);
-//     whitePawnIndex++;
-// }
-
-
-
-// whitePawns = document.querySelectorAll(".white-pawn");
-// whitePawns.forEach(whitePawn => {
-//     whitePawn.addEventListener("click", whitePawnFirstMove);
-//     let parentDiv = whitePawn.parentElement.className;
-//     let parentDivNumber = Array.from(parentDiv)[1];
-//     parentDivNumber = parseInt(parentDivNumber);
-//     let parentDivNumberPlusOne = parentDivNumber + 1;
-//     let parentDivNumberPlusTwo = parentDivNumber + 2;
-
-//     let moveClassNameOne = Array.from(parentDiv)[0] + parentDivNumberPlusOne.toString();
-//     let moveClassNameTwo = Array.from(parentDiv)[0] + parentDivNumberPlusTwo.toString();
-
-//     function whitePawnFirstMove() {
-//         nextMoves = document.querySelectorAll(("." + moveClassNameOne + ", ." + moveClassNameTwo));
-
-//         nextMoves.forEach(nextMove => {
-//             let move = document.createElement("div");
-//             move.classList.add("next-move");
-//             nextMove.appendChild(move);
-
-//         })
-//     }
-
-// })
 
 document.addEventListener("click", nextMove);
 
 function nextMove(e) {
     let selectedElement = document.querySelector(".selected");
     let nextMoves = document.querySelectorAll(".next-move");
-
-
 
     nextMoves.forEach(nextMove => {
         if (nextMove && (e.target == nextMove.parentElement || e.target == nextMove)) {
@@ -239,11 +175,5 @@ function nextMove(e) {
     } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
         whiteQueen.move(e.target);
     }
-
-
-
-
-
-
 
 }
