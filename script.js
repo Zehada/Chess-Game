@@ -143,11 +143,12 @@ function nextMove(e) {
     let nextMoves = document.querySelectorAll(".next-move");
 
     nextMoves.forEach(nextMove => {
-        if (nextMove && (e.target == nextMove.parentElement || e.target == nextMove)) {
-            console.log("hello");
+        if (nextMove && (e.target == nextMove.parentElement || e.target == nextMove || e.target == nextMove.parentElement.querySelector("img"))) {
             let clonedElement = selectedElement.cloneNode();
             clonedElement.classList.remove("selected");
-            console.log(clonedElement)
+            if (nextMove.parentElement.querySelector("img")) {
+                nextMove.parentElement.querySelector("img").remove();
+            }
             nextMove.parentElement.appendChild(clonedElement);
             selectedElement.remove();
         }
@@ -176,6 +177,20 @@ function nextMove(e) {
         whiteQueen.move(e.target);
     } else if (selectedElement !== null && selectedElement.classList.contains("white-king")) {
         whiteKing.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("white-rook")) {
+        whiteRook.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("white-bishop")) {
+        whiteBishop.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("black-pawn")) {
+        blackPawn.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("black-queen")) {
+        blackQueen.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("black-king")) {
+        blackKing.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("black-rook")) {
+        blackRook.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("black-bishop")) {
+        blackBishop.move(e.target);
     }
 
 }

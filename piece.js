@@ -49,419 +49,377 @@ class Piece {
   }
 
   move(piece) {
-    if (this.color == "white") {
+    let parentDivClassName = piece.parentElement.className;
+    let parentDivClassNameNumber = Array.from(parentDivClassName)[1];
+    parentDivClassNameNumber = parseInt(parentDivClassNameNumber);
+    let parentDivClassNameLetter = Array.from(parentDivClassName)[0];
+    let nextMovesClassNames = [];
 
-      if (this.type == "king") {
-        let parentDivClassName = piece.parentElement.className;
-        let parentDivClassNameNumber = Array.from(parentDivClassName)[1];
-        parentDivClassNameNumber = parseInt(parentDivClassNameNumber);
-        let parentDivClassNameLetter = Array.from(parentDivClassName)[0];
-        let indexOfParentDivClassNameLetter = chessboardLetters.indexOf(parentDivClassNameLetter);
-        let nextMovesClassNames = [];
+    let indexOfParentDivClassNameLetter = chessboardLetters.indexOf(parentDivClassNameLetter);
+
+    let bottomDiagonalNextMoveClassNameNumber = parentDivClassNameNumber - 1;
+    let topDiagonalNextMoveClassNameNumber = parentDivClassNameNumber + 1;
+    let lettersReversed = [];
+    let numbersReversed = [];
 
 
+    let rightBottomLetterOwn = 0;
+    let rightBottomLetterOther = 0;
 
-        /*******
-         * TOP *
-         *******/
+    let rightTopLetterOwn = 0;
+    let rightTopLetterOther = 0;
 
-        let className = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+    let rightLetterOwn = 0;
+    let rightLetterOther = 0;
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+    let topNumberOwn = 0;
+    let topNumberOther = 0;
+
+    let bottomNumberOwn = 0;
+    let bottomNumberOther = 0;
+
+    let leftBottomLetterOwn = 0;
+    let leftBottomLetterOther = 0;
+
+    let leftTopLetterOwn = 0;
+    let leftTopLetterOther = 0;
+
+    let leftLetterOwn = 0;
+    let leftLetterOther = 0;
+
+    let className;
+
+
+    /****************************************************
+     * MOVE TOP ONCE (WHITE) / MOVE BOTTOM ONCE (BLACK) *
+     ****************************************************/
+
+    if (this.type == "king" || (this.type == "pawn" && this.color == "white")) {
+      className = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
-        /**********
-         * BOTTOM *
-         **********/
+    /****************************************************
+     * MOVE BOTTOM ONCE (WHITE) / MOVE TOP ONCE (BLACK) *
+     ****************************************************/
 
-        className = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
+    if (this.type == "king" || (this.type == "pawn" && this.color == "black")) {
+      className = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
-        /********
-         * LEFT *
-         ********/
 
-        className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
+    /****************************************************
+     * MOVE LEFT ONCE (WHITE) / MOVE RIGHT ONCE (BLACK) *
+     ****************************************************/
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+    if (this.type == "king") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
-        /*********
-         * RIGHT *
-         *********/
+    /****************************************************
+     * MOVE RIGHT ONCE (WHITE) / MOVE LEFT ONCE (BLACK) *
+     ****************************************************/
 
-        className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
+    if (this.type == "king") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
-        /*************
-         * TOP RIGHT *
-         *************/
 
-        className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber + 1).toString();
+    /**********************************************************
+     * MOVE TOP RIGHT ONCE (WHITE) / MOVE BOTTOM LEFT (BLACK) *
+     **********************************************************/
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+    if (this.type == "king") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber + 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
-        /************
-         * TOP LEFT *
-         ************/
+    /***************************************************************
+     * MOVE TOP LEFT ONCE (WHITE) / MOVE BOTTOM RIGHT ONCE (WHITE) *
+     ***************************************************************/
 
-        className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber + 1).toString();
+    if (this.type == "king") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber + 1).toString();
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
-        /****************
-         * BOTTOM RIGHT *
-         ****************/
+    /***************************************************************
+     * MOVE BOTTOM RIGHT ONCE (WHITE) / MOVE TOP LEFT ONCE (BLACK) *
+     ***************************************************************/
 
-        className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber - 1).toString();
+    if (this.type == "king") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber - 1).toString();
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
-        /***************
-         * BOTTOM LEFT *
-         ***************/
+    /***************************************************************
+     * MOVE BOTTOM LEFT ONCE (WHITE) / MOVE TOP RIGHT ONCE (BLACK) *
+     ***************************************************************/
 
-        className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber - 1).toString();
+    if (this.type == "king") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber - 1).toString();
 
-        if (document.querySelector("." + className) !== null) {
-          if (!document.querySelector("." + className).querySelector(".white")) {
-            nextMovesClassNames.push(className);
-          }
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
         }
+      }
+    }
 
 
 
-        nextMovesClassNames.forEach(move => {
-          let nextMoveDiv = document.querySelector("." + move);
-          let moveButton = document.createElement("div");
-          moveButton.classList.add("next-move");
-          nextMoveDiv.appendChild(moveButton);
 
-        })
+    for (let letter of chessboardLetters) {
 
+      let nextMoveClassNameNumber = chessboardLetters.indexOf(letter) + 1
 
-      } else if (this.type == "queen") {
-        let parentDivClassName = piece.parentElement.className;
-        let parentDivClassNameNumber = Array.from(parentDivClassName)[1];
-        parentDivClassNameNumber = parseInt(parentDivClassNameNumber);
-        let parentDivClassNameLetter = Array.from(parentDivClassName)[0];
-        let nextMovesClassNames = [];
-        let bottomDiagonalNextMoveClassNameNumber = parentDivClassNameNumber - 1;
-        let topDiagonalNextMoveClassNameNumber = parentDivClassNameNumber + 1;
-        let lettersReversed = [];
-        let numbersReversed = [];
+      if (nextMoveClassNameNumber < parentDivClassNameNumber) {
+        numbersReversed.unshift(nextMoveClassNameNumber);
 
+      } else if (nextMoveClassNameNumber > parentDivClassNameNumber) {
 
-        let rightBottomLetterWhite = 0;
-        let rightBottomLetterBlack = 0;
-        let rightTopLetterWhite = 0;
-        let rightTopLetterBlack = 0;
+        /******************************************
+         * MOVE TOP (WHITE) / MOVE BOTTOM (BLACK) *
+         ******************************************/
 
-        let rightLetterWhite = 0;
-        let rightLetterBlack = 0;
-        let topNumberWhite = 0;
-        let topNumberBlack = 0;
-
-
-        for (let letter of chessboardLetters) {
-
-          let nextMoveClassNameNumber = chessboardLetters.indexOf(letter) + 1
-
-          if (nextMoveClassNameNumber < parentDivClassNameNumber) {
-            numbersReversed.unshift(nextMoveClassNameNumber);
-
-          } else if (nextMoveClassNameNumber > parentDivClassNameNumber) {
-
-            /*******
-             * TOP *
-             *******/
-
-            let className = parentDivClassNameLetter + nextMoveClassNameNumber.toString();
-
-            if (document.querySelector("." + className) !== null) {
-
-              if (document.querySelector("." + className).innerHTML == "" && topNumberWhite == 0 && topNumberBlack == 0) {
-                nextMovesClassNames.push(className);
-              } else if (document.querySelector("." + className).querySelector(".white")) {
-                topNumberWhite = 1;
-
-              } else if (document.querySelector("." + className).querySelector(".black") && topNumberBlack == 0 && topNumberWhite == 0) {
-                nextMovesClassNames.push(className)
-                topNumberBlack = 1;
-              }
-            }
-          }
-
-          if (chessboardLetters.indexOf(letter) < chessboardLetters.indexOf(parentDivClassNameLetter)) {
-            lettersReversed.unshift(letter);
-
-          } else if (chessboardLetters.indexOf(letter) > chessboardLetters.indexOf(parentDivClassNameLetter)) {
-
-            /*********
-             * RIGHT *
-             *********/
-
-            let className = letter + parentDivClassNameNumber.toString();
-
-            if (document.querySelector("." + className) !== null) {
-
-              if (document.querySelector("." + className).innerHTML == "" && rightLetterWhite == 0 && rightLetterBlack == 0) {
-                nextMovesClassNames.push(className);
-              } else if (document.querySelector("." + className).querySelector(".white")) {
-                rightLetterWhite = 1;
-
-              } else if (document.querySelector("." + className).querySelector(".black") && rightLetterWhite == 0 && rightLetterBlack == 0) {
-                nextMovesClassNames.push(className)
-                rightLetterBlack = 1;
-              }
-            }
-
-
-            let diagonalNextMoveClassNameNumberMinus = bottomDiagonalNextMoveClassNameNumber--;
-            let diagonalNextMoveClassNameNumberPlus = topDiagonalNextMoveClassNameNumber++;
-
-            /*************************
-             * DIAGONAL RIGHT BOTTOM *
-             *************************/
-
-            className = letter + diagonalNextMoveClassNameNumberMinus.toString();
-
-            if (document.querySelector("." + className) !== null) {
-
-              if (document.querySelector("." + className).innerHTML == "" && rightBottomLetterWhite == 0 && rightBottomLetterBlack == 0) {
-                nextMovesClassNames.push(className);
-              } else if (document.querySelector("." + className).querySelector(".white")) {
-                rightBottomLetterWhite = 1;
-
-              } else if (document.querySelector("." + className).querySelector(".black") && rightBottomLetterWhite == 0 && rightBottomLetterBlack == 0) {
-                nextMovesClassNames.push(className)
-                rightBottomLetterBlack = 1;
-              }
-            }
-
-            /**********************
-             * DIAGONAL RIGHT TOP *
-             **********************/
-
-            className = letter + diagonalNextMoveClassNameNumberPlus.toString();
-
-            if (document.querySelector("." + className) !== null) {
-
-              if (document.querySelector("." + className).innerHTML == "" && rightTopLetterWhite == 0 && rightTopLetterBlack == 0) {
-                nextMovesClassNames.push(className);
-              } else if (document.querySelector("." + className).querySelector(".white")) {
-                rightTopLetterWhite = 1;
-
-              } else if (document.querySelector("." + className).querySelector(".black") && rightTopLetterWhite == 0 && rightTopLetterBlack == 0) {
-                nextMovesClassNames.push(className)
-                rightTopLetterBlack = 1;
-              }
-            }
-          }
-
-          // if (letter !== parentDivClassNameLetter) {
-
-          //   let nextMoveClassName = letter + parentDivClassNameNumber;
-
-          //   let nextMoveDiv = document.querySelector("." + nextMoveClassName);
-          //   let moveButton = document.createElement("div");
-          //   moveButton.classList.add("next-move");
-          //   nextMoveDiv.appendChild(moveButton);
-          // }
-
-          // if ((chessboardLetters.indexOf(letter) + 1) !== parentDivClassNameNumber) {
-          //   let nextMoveClassName = parentDivClassNameLetter + nextMoveClassNameNumber.toString();
-          //   let nextMoveDiv = document.querySelector("." + nextMoveClassName);
-          //   let moveButton = document.createElement("div");
-          //   moveButton.classList.add("next-move");
-          //   nextMoveDiv.appendChild(moveButton);
-          // }
-        }
-
-        bottomDiagonalNextMoveClassNameNumber = parentDivClassNameNumber - 1;
-        topDiagonalNextMoveClassNameNumber = parentDivClassNameNumber + 1;
-
-        let leftBottomLetterWhite = 0;
-        let leftBottomLetterBlack = 0;
-        let leftTopLetterWhite = 0;
-        let leftTopLetterBlack = 0;
-
-        let leftLetterWhite = 0;
-        let leftLetterBlack = 0;
-
-        lettersReversed.forEach(letter => {
-
-          /********
-           * LEFT *
-           ********/
-
-          let className = letter + parentDivClassNameNumber.toString();
+        if (this.type == "queen" || this.type == "rook") {
+          className = parentDivClassNameLetter + nextMoveClassNameNumber.toString();
 
           if (document.querySelector("." + className) !== null) {
 
-            if (document.querySelector("." + className).innerHTML == "" && leftLetterWhite == 0 && leftLetterBlack == 0) {
+            if (document.querySelector("." + className).innerHTML == "" && topNumberOwn == 0 && topNumberOther == 0) {
               nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector(".white")) {
-              leftLetterWhite = 1;
+            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+              topNumberOwn = 1;
 
-            } else if (document.querySelector("." + className).querySelector(".black") && leftLetterWhite == 0 && leftLetterBlack == 0) {
+            } else if (!document.querySelector("." + className).querySelector("." + this.color) && topNumberOther == 0 && topNumberOwn == 0) {
               nextMovesClassNames.push(className)
-              leftLetterBlack = 1;
+              topNumberOther = 1;
             }
           }
+        }
+      }
 
+      if (chessboardLetters.indexOf(letter) < chessboardLetters.indexOf(parentDivClassNameLetter)) {
+        lettersReversed.unshift(letter);
 
+      } else if (chessboardLetters.indexOf(letter) > chessboardLetters.indexOf(parentDivClassNameLetter)) {
 
-          let diagonalNextMoveClassNameNumberMinus = bottomDiagonalNextMoveClassNameNumber--;
-          let diagonalNextMoveClassNameNumberPlus = topDiagonalNextMoveClassNameNumber++;
+        /******************************************
+         * MOVE RIGHT (WHITE) / MOVE LEFT (BLACK) *
+         ******************************************/
+        if (this.type == "queen" || this.type == "rook") {
+          className = letter + parentDivClassNameNumber.toString();
 
-          /************************
-           * DIAGONAL LEFT BOTTOM *
-           ************************/
+          if (document.querySelector("." + className) !== null) {
 
+            if (document.querySelector("." + className).innerHTML == "" && rightLetterOwn == 0 && rightLetterOther == 0) {
+              nextMovesClassNames.push(className);
+            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+              rightLetterOwn = 1;
+
+            } else if (!document.querySelector("." + className).querySelector("." + this.color) && rightLetterOwn == 0 && rightLetterOther == 0) {
+              nextMovesClassNames.push(className)
+              rightLetterOther = 1;
+            }
+          }
+        }
+
+        let diagonalNextMoveClassNameNumberMinus = bottomDiagonalNextMoveClassNameNumber--;
+        let diagonalNextMoveClassNameNumberPlus = topDiagonalNextMoveClassNameNumber++;
+
+        /*****************************************************
+         * MOVE RIGHT BOTTOM (WHITE) / MOVE LEFT TOP (BLACK) *
+         *****************************************************/
+
+        if (this.type == "queen" || this.type == "bishop") {
           className = letter + diagonalNextMoveClassNameNumberMinus.toString();
 
           if (document.querySelector("." + className) !== null) {
 
-            if (document.querySelector("." + className).innerHTML == "" && leftBottomLetterWhite == 0 && leftBottomLetterBlack == 0) {
+            if (document.querySelector("." + className).innerHTML == "" && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
               nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector(".white")) {
-              leftBottomLetterWhite = 1;
+            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+              rightBottomLetterOwn = 1;
 
-            } else if (document.querySelector("." + className).querySelector(".black") && leftBottomLetterWhite == 0 && leftBottomLetterBlack == 0) {
+            } else if (!document.querySelector("." + className).querySelector("." + this.color) && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
               nextMovesClassNames.push(className)
-              leftBottomLetterBlack = 1;
+              rightBottomLetterOther = 1;
             }
           }
 
-          /*********************
-           * DIAGONAL LEFT TOP *
-           *********************/
+
+
+          /*****************************************************
+           * MOVE RIGHT TOP (WHITE) / MOVE LEFT BOTTOM (BLACK) *
+           *****************************************************/
 
           className = letter + diagonalNextMoveClassNameNumberPlus.toString();
 
           if (document.querySelector("." + className) !== null) {
 
-            if (document.querySelector("." + className).innerHTML == "" && leftTopLetterWhite == 0 && leftTopLetterBlack == 0) {
+            if (document.querySelector("." + className).innerHTML == "" && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
               nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector(".white")) {
-              leftTopLetterWhite = 1;
+            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+              rightTopLetterOwn = 1;
 
-            } else if (document.querySelector("." + className).querySelector(".black") && leftTopLetterWhite == 0 && leftTopLetterBlack == 0) {
+            } else if (!document.querySelector("." + className).querySelector("." + this.color) && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
               nextMovesClassNames.push(className)
-              leftTopLetterBlack = 1;
+              rightTopLetterOther = 1;
             }
           }
-        })
-
-
-        let bottomNumberWhite = 0;
-        let bottomNumberBlack = 0;
-
-        numbersReversed.forEach(number => {
-
-          /**********
-           * BOTTOM *
-           **********/
-
-          let className = parentDivClassNameLetter + number;
-
-          if (document.querySelector("." + className) !== null) {
-
-            if (document.querySelector("." + className).innerHTML == "" && bottomNumberWhite == 0 && bottomNumberBlack == 0) {
-              nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector(".white")) {
-              bottomNumberWhite = 1;
-
-            } else if (document.querySelector("." + className).querySelector(".black") && bottomNumberWhite == 0 && bottomNumberBlack == 0) {
-              nextMovesClassNames.push(className)
-              bottomNumberBlack = 1;
-            }
-          }
-        })
-
-
-        // creates white queen's move options
-        nextMovesClassNames.forEach(move => {
-          let nextMoveDiv = document.querySelector("." + move);
-          let moveButton = document.createElement("div");
-          moveButton.classList.add("next-move");
-          nextMoveDiv.appendChild(moveButton);
-
-        })
-
-      } else if (this.type == "rook") {
-
-      } else if (this.type == "bishop") {
-
-      } else if (this.type == "knight") {
-
-      } else if (this.type == "pawn") {
-
-        let parentDiv = piece.parentElement.className;
-        let parentDivNumber = Array.from(parentDiv)[1];
-        parentDivNumber = parseInt(parentDivNumber);
-        let parentDivNumberPlusOne = parentDivNumber + 1;
-        let moveClassName = Array.from(parentDiv)[0] + parentDivNumberPlusOne.toString();
-        let nextMoveDiv = document.querySelector("." + moveClassName);
-        let moveButton = document.createElement("div");
-        moveButton.classList.add("next-move");
-        nextMoveDiv.appendChild(moveButton);
-
-
-
-        // if (click == 1) {
-        //   selectedPiece.classList.remove("selected");
-        // }
-
-
-
-
-
-      }
-    } else if (this.color == "black") {
-      if (this.type == "king") {
-
-      } else if (this.type == "queen") {
-
-      } else if (this.type == "rook") {
-
-      } else if (this.type == "bishop") {
-
-      } else if (this.type == "knight") {
-
-      } else if (this.type == "pawn") {
-
+        }
       }
     }
-  }
 
+    bottomDiagonalNextMoveClassNameNumber = parentDivClassNameNumber - 1;
+    topDiagonalNextMoveClassNameNumber = parentDivClassNameNumber + 1;
+
+
+
+    lettersReversed.forEach(letter => {
+
+      /******************************************
+       * MOVE LEFT (WHITE) / MOVE RIGHT (BLACK) *
+       ******************************************/
+
+      if (this.type == "queen" || this.type == "rook") {
+
+        className = letter + parentDivClassNameNumber.toString();
+
+        if (document.querySelector("." + className) !== null) {
+
+          if (document.querySelector("." + className).innerHTML == "" && leftLetterOwn == 0 && leftLetterOther == 0) {
+            nextMovesClassNames.push(className);
+          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            leftLetterOwn = 1;
+
+          } else if (!document.querySelector("." + className).querySelector("." + this.color) && leftLetterOwn == 0 && leftLetterOther == 0) {
+            nextMovesClassNames.push(className)
+            leftLetterOther = 1;
+          }
+        }
+      }
+
+
+      let diagonalNextMoveClassNameNumberMinus = bottomDiagonalNextMoveClassNameNumber--;
+      let diagonalNextMoveClassNameNumberPlus = topDiagonalNextMoveClassNameNumber++;
+
+      /*****************************************************
+       * MOVE LEFT BOTTOM (WHITE) / MOVE RIGHT TOP (BLACK) *
+       *****************************************************/
+      if (this.type == "queen" || this.type == "bishop") {
+        className = letter + diagonalNextMoveClassNameNumberMinus.toString();
+
+        if (document.querySelector("." + className) !== null) {
+
+          if (document.querySelector("." + className).innerHTML == "" && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
+            nextMovesClassNames.push(className);
+          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            leftBottomLetterOwn = 1;
+
+          } else if (!document.querySelector("." + className).querySelector("." + this.color) && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
+            nextMovesClassNames.push(className)
+            leftBottomLetterOther = 1;
+          }
+        }
+
+
+        /*****************************************************
+         * MOVE LEFT TOP (WHITE) / MOVE RIGHT BOTTOM (BLACK) *
+         *****************************************************/
+
+        className = letter + diagonalNextMoveClassNameNumberPlus.toString();
+
+        if (document.querySelector("." + className) !== null) {
+
+          if (document.querySelector("." + className).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+            nextMovesClassNames.push(className);
+          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            leftTopLetterOwn = 1;
+
+          } else if (!document.querySelector("." + className).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+            nextMovesClassNames.push(className)
+            leftTopLetterOther = 1;
+          }
+        }
+
+      }
+    })
+
+
+
+
+    numbersReversed.forEach(number => {
+
+      /******************************************
+       * MOVE BOTTOM (WHITE) / MOVE TOP (BLACK) *
+       ******************************************/
+      if (this.type == "queen" || this.type == "rook") {
+        className = parentDivClassNameLetter + number;
+
+        if (document.querySelector("." + className) !== null) {
+
+          if (document.querySelector("." + className).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 0) {
+            nextMovesClassNames.push(className);
+          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            bottomNumberOwn = 1;
+
+          } else if (!document.querySelector("." + className).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 0) {
+            nextMovesClassNames.push(className)
+            bottomNumberOther = 1;
+          }
+        }
+      }
+    })
+
+
+    nextMovesClassNames.forEach(move => {
+      let nextMoveDiv = document.querySelector("." + move);
+      let moveButton = document.createElement("div");
+      moveButton.classList.add("next-move");
+      nextMoveDiv.appendChild(moveButton);
+
+    })
+
+
+  }
 }
