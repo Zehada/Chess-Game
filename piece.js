@@ -50,7 +50,123 @@ class Piece {
 
   move(piece) {
     if (this.color == "white") {
+
       if (this.type == "king") {
+        let parentDivClassName = piece.parentElement.className;
+        let parentDivClassNameNumber = Array.from(parentDivClassName)[1];
+        parentDivClassNameNumber = parseInt(parentDivClassNameNumber);
+        let parentDivClassNameLetter = Array.from(parentDivClassName)[0];
+        let indexOfParentDivClassNameLetter = chessboardLetters.indexOf(parentDivClassNameLetter);
+        let nextMovesClassNames = [];
+
+
+
+        /*******
+         * TOP *
+         *******/
+
+        let className = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+        /**********
+         * BOTTOM *
+         **********/
+
+        className = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+        /********
+         * LEFT *
+         ********/
+
+        className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+        /*********
+         * RIGHT *
+         *********/
+
+        className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+        /*************
+         * TOP RIGHT *
+         *************/
+
+        className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber + 1).toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+        /************
+         * TOP LEFT *
+         ************/
+
+        className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber + 1).toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+        /****************
+         * BOTTOM RIGHT *
+         ****************/
+
+        className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber - 1).toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+        /***************
+         * BOTTOM LEFT *
+         ***************/
+
+        className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber - 1).toString();
+
+        if (document.querySelector("." + className) !== null) {
+          if (!document.querySelector("." + className).querySelector(".white")) {
+            nextMovesClassNames.push(className);
+          }
+        }
+
+
+
+        nextMovesClassNames.forEach(move => {
+          let nextMoveDiv = document.querySelector("." + move);
+          let moveButton = document.createElement("div");
+          moveButton.classList.add("next-move");
+          nextMoveDiv.appendChild(moveButton);
+
+        })
+
 
       } else if (this.type == "queen") {
         let parentDivClassName = piece.parentElement.className;

@@ -174,6 +174,8 @@ function nextMove(e) {
         whitePawn.move(e.target);
     } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
         whiteQueen.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("white-king")) {
+        whiteKing.move(e.target);
     }
 
 }
