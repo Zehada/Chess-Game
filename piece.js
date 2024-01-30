@@ -206,6 +206,110 @@ class Piece {
 
 
 
+    /***************************************************************
+     * MOVE WHITE KNIGHT TOP RIGHT / MOVE BLACK KNIGHT BOTTOM LEFT *
+     ***************************************************************/
+
+    if (this.type == "knight") {
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 1] + (parentDivClassNameNumber + 2).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+      /***************************************************************
+       * MOVE WHITE KNIGHT RIGHT TOP / MOVE BLACK KNIGHT LEFT BOTTOM *
+       ***************************************************************/
+
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 2] + (parentDivClassNameNumber + 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+      /***************************************************************
+       * MOVE WHITE KNIGHT TOP LEFT / MOVE BLACK KNIGHT BOTTOM RIGHT *
+       ***************************************************************/
+
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 1] + (parentDivClassNameNumber + 2).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+
+      /***************************************************************
+       * MOVE WHITE KNIGHT LEFT TOP / MOVE BLACK KNIGHT RIGHT BOTTOM *
+       ***************************************************************/
+
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 2] + (parentDivClassNameNumber + 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+      /***************************************************************
+       * MOVE WHITE KNIGHT LEFT BOTTOM / MOVE BLACK KNIGHT RIGHT TOP *
+       ***************************************************************/
+
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 2] + (parentDivClassNameNumber - 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+      /***************************************************************
+       * MOVE WHITE KNIGHT BOTTOM LEFT / MOVE BLACK KNIGHT TOP RIGHT *
+       ***************************************************************/
+
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 1] + (parentDivClassNameNumber - 2).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+      /***************************************************************
+       * MOVE WHITE KNIGHT BOTTOM RIGHT / MOVE BLACK KNIGHT TOP LEFT *
+       ***************************************************************/
+
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 1] + (parentDivClassNameNumber - 2).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+      /***************************************************************
+       * MOVE WHITE KNIGHT RIGHT BOTTOM / MOVE BLACK KNIGHT LEFT TOP *
+       ***************************************************************/
+
+      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 2] + (parentDivClassNameNumber - 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+
+
+
+    }
+
+
 
     for (let letter of chessboardLetters) {
 
@@ -236,6 +340,7 @@ class Piece {
             }
           }
         }
+
       }
 
       if (chessboardLetters.indexOf(letter) < chessboardLetters.indexOf(parentDivClassNameLetter)) {

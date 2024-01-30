@@ -181,6 +181,8 @@ function nextMove(e) {
         whiteRook.move(e.target);
     } else if (selectedElement !== null && selectedElement.classList.contains("white-bishop")) {
         whiteBishop.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("white-knight")) {
+        whiteKnight.move(e.target);
     } else if (selectedElement !== null && selectedElement.classList.contains("black-pawn")) {
         blackPawn.move(e.target);
     } else if (selectedElement !== null && selectedElement.classList.contains("black-queen")) {
@@ -191,6 +193,8 @@ function nextMove(e) {
         blackRook.move(e.target);
     } else if (selectedElement !== null && selectedElement.classList.contains("black-bishop")) {
         blackBishop.move(e.target);
+    } else if (selectedElement !== null && selectedElement.classList.contains("black-knight")) {
+        blackKnight.move(e.target);
     }
 
 }
