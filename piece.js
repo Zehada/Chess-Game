@@ -88,13 +88,14 @@ class Piece {
     let leftLetterOther = 0;
 
     let className;
+    let firstSquare;
 
 
     /****************************************************
      * MOVE TOP ONCE (WHITE) / MOVE BOTTOM ONCE (BLACK) *
      ****************************************************/
 
-    if (this.type == "king" || (this.type == "pawn" && this.color == "white")) {
+    if (this.type == "king") {
       className = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
 
       if (document.querySelector("." + className) !== null) {
@@ -104,11 +105,53 @@ class Piece {
       }
     }
 
+
+    if (this.type == "pawn" && this.color == "white") {
+      className = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+
+        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".black")) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+    }
+
+
+    /*************************
+     * WHITE PAWN FIRST MOVE *
+     *************************/
+
+    firstSquare = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+    if (this.type == "pawn" && this.color == "white" && !piece.classList.contains("moved")) {
+      className = parentDivClassNameLetter + (parentDivClassNameNumber + 2).toString();
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".black") && !document.querySelector("." + firstSquare).querySelector("." + this.color) && !document.querySelector("." + firstSquare).querySelector(".black")) {
+          nextMovesClassNames.push(className);
+        }
+      }
+    }
+
+    /*************************
+     * BLACK PAWN FIRST MOVE *
+     *************************/
+
+    firstSquare = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
+    if (this.type == "pawn" && this.color == "black" && !piece.classList.contains("moved")) {
+      className = parentDivClassNameLetter + (parentDivClassNameNumber - 2).toString();
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".white") && !document.querySelector("." + firstSquare).querySelector("." + this.color) && !document.querySelector("." + firstSquare).querySelector(".white")) {
+          nextMovesClassNames.push(className);
+        }
+      }
+    }
+
     /****************************************************
      * MOVE BOTTOM ONCE (WHITE) / MOVE TOP ONCE (BLACK) *
      ****************************************************/
 
-    if (this.type == "king" || (this.type == "pawn" && this.color == "black")) {
+    if (this.type == "king") {
       className = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
 
       if (document.querySelector("." + className) !== null) {
@@ -118,6 +161,17 @@ class Piece {
       }
     }
 
+    if (this.type == "pawn" && this.color == "black") {
+      className = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
+
+      if (document.querySelector("." + className) !== null) {
+
+        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".white")) {
+          nextMovesClassNames.push(className);
+        }
+      }
+
+    }
 
     /****************************************************
      * MOVE LEFT ONCE (WHITE) / MOVE RIGHT ONCE (BLACK) *

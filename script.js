@@ -134,7 +134,7 @@ blackQueen.initPiece();
 blackQueen.firstPosition(chessboardLetters[3], "8");
 
 
-
+let round = 1;
 
 document.addEventListener("click", nextMove);
 
@@ -151,6 +151,11 @@ function nextMove(e) {
             }
             nextMove.parentElement.appendChild(clonedElement);
             selectedElement.remove();
+
+            if (clonedElement.classList.contains("white-pawn") || clonedElement.classList.contains("black-pawn")) {
+                clonedElement.classList.add("moved");
+            }
+            round++;
         }
     })
 
@@ -171,30 +176,33 @@ function nextMove(e) {
         nextMoves.forEach(nextMove => nextMove.remove());
     }
 
-    if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
-        whitePawn.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
-        whiteQueen.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("white-king")) {
-        whiteKing.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("white-rook")) {
-        whiteRook.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("white-bishop")) {
-        whiteBishop.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("white-knight")) {
-        whiteKnight.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("black-pawn")) {
-        blackPawn.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("black-queen")) {
-        blackQueen.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("black-king")) {
-        blackKing.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("black-rook")) {
-        blackRook.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("black-bishop")) {
-        blackBishop.move(e.target);
-    } else if (selectedElement !== null && selectedElement.classList.contains("black-knight")) {
-        blackKnight.move(e.target);
+    if (round % 2 == 1) {
+        if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
+            whitePawn.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
+            whiteQueen.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("white-king")) {
+            whiteKing.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("white-rook")) {
+            whiteRook.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("white-bishop")) {
+            whiteBishop.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("white-knight")) {
+            whiteKnight.move(e.target);
+        }
+    } else {
+        if (selectedElement !== null && selectedElement.classList.contains("black-pawn")) {
+            blackPawn.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("black-queen")) {
+            blackQueen.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("black-king")) {
+            blackKing.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("black-rook")) {
+            blackRook.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("black-bishop")) {
+            blackBishop.move(e.target);
+        } else if (selectedElement !== null && selectedElement.classList.contains("black-knight")) {
+            blackKnight.move(e.target);
+        }
     }
-
 }
