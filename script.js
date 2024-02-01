@@ -147,6 +147,7 @@ function nextMove(e) {
         let nextMoves = document.querySelectorAll(".next-move");
 
         nextMoves.forEach(nextMove => {
+
             if (nextMove && (e.target == nextMove.parentElement || e.target == nextMove || e.target == nextMove.parentElement.querySelector("img"))) {
                 let clonedElement = selectedElement.cloneNode();
                 clonedElement.classList.remove("selected");
@@ -154,11 +155,56 @@ function nextMove(e) {
                     nextMove.parentElement.querySelector("img").remove();
                 }
                 nextMove.parentElement.appendChild(clonedElement);
+                console.log(selectedElement.parentElement);
+                console.log(clonedElement.parentElement);
+
+
+
+                if (clonedElement.classList.contains("white-pawn")) {
+                    let moveTopLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) + 1);
+                    let pepDivLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
+                    let moveTopRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) + 1);
+                    let pepDivRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
+
+                    if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivLeft && clonedElement.parentElement.className == moveTopLeft) {
+                        document.querySelector(".pep").remove();
+                    } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivRight && clonedElement.parentElement.className == moveTopRight) {
+                        document.querySelector(".pep").remove();
+                    }
+
+                }
+
+                if (clonedElement.classList.contains("black-pawn")) {
+                    let moveTopLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) - 1);
+                    let pepDivLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
+                    let moveTopRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) - 1);
+                    let pepDivRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
+
+                    if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivLeft && clonedElement.parentElement.className == moveTopLeft) {
+                        document.querySelector(".pep").remove();
+                    } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivRight && clonedElement.parentElement.className == moveTopRight) {
+                        document.querySelector(".pep").remove();
+                    }
+
+                }
+
                 selectedElement.remove();
 
-                if (clonedElement.classList.contains("white-pawn") || clonedElement.classList.contains("black-pawn")) {
-                    clonedElement.classList.add("moved");
+                if (document.querySelector(".pep")) {
+                    document.querySelector(".pep").classList.remove("pep");
                 }
+
+                if (clonedElement.classList.contains("white-pawn") || clonedElement.classList.contains("black-pawn")) {
+                    if (!clonedElement.classList.contains("moved") && (nextMove.parentElement.className.includes("4") || nextMove.parentElement.className.includes("5"))) {
+                        clonedElement.classList.add("pep");
+                    }
+
+                    clonedElement.classList.add("moved");
+
+
+                }
+
+
 
                 if (clonedElement.classList.contains("white-pawn") && clonedElement.parentElement.className.includes("8")) {
                     let promotion = document.createElement("div");

@@ -218,10 +218,11 @@ class Piece {
 
     if (this.type == "pawn" && this.color == "white") {
       className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber + 1).toString();
+      let RightSquare = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
 
 
       if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black")) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black") || (document.querySelector("." + RightSquare).querySelector(".black.pep"))) {
           nextMovesClassNames.push(className);
         }
       }
@@ -243,10 +244,11 @@ class Piece {
 
     if (this.type == "pawn" && this.color == "white") {
       className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber + 1).toString();
+      let leftSquare = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
 
 
       if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black")) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black") || (document.querySelector("." + leftSquare).querySelector(".black.pep"))) {
           nextMovesClassNames.push(className);
         }
       }
@@ -268,10 +270,11 @@ class Piece {
 
     if (this.type == "pawn" && this.color == "black") {
       className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber - 1).toString();
+      let leftSquare = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
 
 
       if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white")) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white") || (document.querySelector("." + leftSquare).querySelector(".white.pep"))) {
           nextMovesClassNames.push(className);
         }
       }
@@ -293,10 +296,11 @@ class Piece {
 
     if (this.type == "pawn" && this.color == "black") {
       className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber - 1).toString();
+      let RightSquare = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
 
 
       if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white")) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white") || (document.querySelector("." + RightSquare).querySelector(".white.pep"))) {
           nextMovesClassNames.push(className);
         }
       }
