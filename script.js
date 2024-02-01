@@ -3,8 +3,8 @@ const chessboard = document.querySelector(".chessboard");
 const chessboardLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
 const rooksLetters = ["a", "h"];
-const bishopsLetters = ["b", "g"];
-const knightsLetters = ["c", "f"];
+const bishopsLetters = ["c", "f"];
+const knightsLetters = ["b", "g"];
 
 let chessboardNumber = 8;
 

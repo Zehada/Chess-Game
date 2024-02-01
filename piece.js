@@ -216,6 +216,17 @@ class Piece {
       }
     }
 
+    if (this.type == "pawn" && this.color == "white") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber + 1).toString();
+
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black")) {
+          nextMovesClassNames.push(className);
+        }
+      }
+    }
+
     /***************************************************************
      * MOVE TOP LEFT ONCE (WHITE) / MOVE BOTTOM RIGHT ONCE (WHITE) *
      ***************************************************************/
@@ -225,6 +236,17 @@ class Piece {
 
       if (document.querySelector("." + className) !== null) {
         if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+    }
+
+    if (this.type == "pawn" && this.color == "white") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber + 1).toString();
+
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black")) {
           nextMovesClassNames.push(className);
         }
       }
@@ -244,6 +266,17 @@ class Piece {
       }
     }
 
+    if (this.type == "pawn" && this.color == "black") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber - 1).toString();
+
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white")) {
+          nextMovesClassNames.push(className);
+        }
+      }
+    }
+
     /***************************************************************
      * MOVE BOTTOM LEFT ONCE (WHITE) / MOVE TOP RIGHT ONCE (BLACK) *
      ***************************************************************/
@@ -253,6 +286,17 @@ class Piece {
 
       if (document.querySelector("." + className) !== null) {
         if (!document.querySelector("." + className).querySelector("." + this.color)) {
+          nextMovesClassNames.push(className);
+        }
+      }
+    }
+
+    if (this.type == "pawn" && this.color == "black") {
+      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber - 1).toString();
+
+
+      if (document.querySelector("." + className) !== null) {
+        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white")) {
           nextMovesClassNames.push(className);
         }
       }
