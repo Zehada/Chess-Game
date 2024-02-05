@@ -401,6 +401,31 @@ function nextMove(e) {
             } else if (selectedElement !== null && selectedElement.classList.contains("black-knight")) {
                 blackKnight.move(e.target);
             }
+
+            if (document.querySelector(".blackcheck")) {
+
+                let checkDivs = document.querySelectorAll(".blackcheck");
+                checkDivs.forEach(checkDiv => {
+                    checkDiv.classList.remove("blackcheck");
+                })
+            }
+
+            if (document.querySelector(".moveoutblack")) {
+
+                let checkDivs = document.querySelectorAll(".moveoutblack");
+                checkDivs.forEach(checkDiv => {
+                    checkDiv.classList.remove("moveoutblack");
+                })
+            }
+
+            if (document.querySelector(".blackmove")) {
+
+                let blackMoves = document.querySelectorAll(".blackmove");
+                blackMoves.forEach(blackMove => {
+                    blackMove.classList.remove("blackmove");
+                })
+            }
+
         }
 
 

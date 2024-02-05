@@ -59,10 +59,11 @@ class Piece {
     let checkIds = [];
     let moveOut = [];
 
-    let topLeft = [];
+    let topLeftCheckIds = [];
+    let topLeftMoveOut = [];
 
-    let topLeftCheckDivs = [];
-
+    let bottomCheckIds = [];
+    let bottomMoveOut = [];
 
     let indexOfParentDivIdLetter = chessboardLetters.indexOf(parentDivIdLetter);
 
@@ -93,10 +94,16 @@ class Piece {
     let leftTopLetterOwn = 0;
     let leftTopLetterOther = 0;
 
+    let topLeft = {
+      own: 0,
+      other: 0
+    }
+
     let leftLetterOwn = 0;
     let leftLetterOther = 0;
 
     let id;
+    let idnn;
     let firstSquare;
 
     let idList = [];
@@ -296,6 +303,68 @@ class Piece {
 
 
 
+    function pieceMoves(id, idnn, color, lastIteration, elements, positionCheckIds, positionMoveOut) {
+
+      if (document.querySelector("#" + id) !== null) {
+
+
+        if (document.querySelector("#" + id).innerHTML == "" && elements.own == 0 && elements.other == 0) {
+          nextMovesIds.push(id);
+          positionCheckIds.push(id);
+          positionMoveOut.push(id);
+
+          if (document.querySelector("#" + id).id.includes(lastIteration)) {
+
+            positionCheckIds.length = 0;
+            positionMoveOut.length = 0;
+          }
+
+        } else if (document.querySelector("#" + id).querySelector("." + color)) {
+          console.log("hello")
+          elements.own = 1;
+          console.log(topLeft.own, piece)
+          positionCheckIds.length = 0;
+          positionMoveOut.length = 0;
+
+        } else if (!document.querySelector("#" + id).querySelector("." + color) && elements.own == 0 && elements.other == 0) {
+          nextMovesIds.push(id)
+          elements.other = 1;
+          positionMoveOut.push(id);
+
+          if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
+
+            positionCheckIds.push(parentDivId);
+            positionMoveOut.length = 0;
+          } else {
+            positionCheckIds.length = 0;
+          }
+
+        } else if (document.querySelector("#" + id).innerHTML == "" && elements.own == 0 && elements.other == 1) {
+          if (document.querySelector("#" + id).id.includes(lastIteration)) {
+            positionMoveOut.length = 0;
+          }
+
+        } else if (!document.querySelector("#" + id).querySelector("." + color) && elements.own == 0 && elements.other == 1) {
+
+          elements.other = 2;
+
+          if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
+            positionMoveOut.push(id);
+          } else {
+            positionMoveOut.length = 0;
+          }
+
+        }
+
+      } else if (document.querySelector("#" + id) == null && elements.own == 0 && elements.other == 0) {
+        if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
+          positionCheckIds.length = 0;
+          positionMoveOut.length = 0;
+        }
+      }
+
+    }
+
     for (let letter of chessboardLetters) {
 
 
@@ -467,64 +536,68 @@ class Piece {
 
         id = letter + diagonalNextMoveIdNumberPlus.toString();
 
-        if (document.querySelector("#" + id) !== null) {
+        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus.toString() - 1);
 
 
-          if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-            nextMovesIds.push(id);
-            topLeft.push(id);
-            topLeftCheckDivs.push(id);
+        pieceMoves(id, idnn, this.color, lastIterationLetter, topLeft, topLeftCheckIds, topLeftMoveOut);
 
-            if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
 
-              topLeft = [];
-              topLeftCheckDivs = [];
-            }
+        // if (document.querySelector("#" + id) !== null) {
 
-          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-            leftTopLetterOwn = 1;
-            topLeft = [];
-            topLeftCheckDivs = [];
 
-          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-            nextMovesIds.push(id)
-            leftTopLetterOther = 1;
-            topLeftCheckDivs.push(id);
+        //   if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+        //     nextMovesIds.push(id);
+        //     topLeftCheckIds.push(id);
+        //     topLeftMoveOut.push(id);
 
-            if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
-              // topLeft.push(id);
-              topLeft.push(parentDivId);
-              topLeftCheckDivs = [];
-            } else {
-              topLeft = [];
-            }
+        //     if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
 
-          } else if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
-            if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
-              topLeftCheckDivs = [];
-            }
+        //       topLeftCheckIds = [];
+        //       topLeftMoveOut = [];
+        //     }
 
-          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
+        //   } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
+        //     leftTopLetterOwn = 1;
+        //     topLeftCheckIds = [];
+        //     topLeftMoveOut = [];
 
-            leftTopLetterOther = 2;
-            // topLeftCheckDivs.push(id);
+        //   } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+        //     nextMovesIds.push(id)
+        //     leftTopLetterOther = 1;
+        //     topLeftMoveOut.push(id);
 
-            if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
-              // topLeft.push(id);
-              topLeftCheckDivs.push(id);
-            } else {
-              topLeftCheckDivs = [];
-            }
+        //     if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
 
-          }
+        //       topLeftCheckIds.push(parentDivId);
+        //       topLeftMoveOut = [];
+        //     } else {
+        //       topLeftCheckIds = [];
+        //     }
 
-        } else if (document.querySelector("#" + id) == null && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-          let idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus.toString() - 1);
-          if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
-            topLeft = [];
-            topLeftCheckDivs = [];
-          }
-        }
+        //   } else if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
+        //     if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
+        //       topLeftMoveOut = [];
+        //     }
+
+        //   } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
+
+        //     leftTopLetterOther = 2;
+
+        //     if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
+        //       topLeftMoveOut.push(id);
+        //     } else {
+        //       topLeftMoveOut = [];
+        //     }
+
+        //   }
+
+        // } else if (document.querySelector("#" + id) == null && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+        //   let idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus.toString() - 1);
+        //   if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
+        //     topLeftCheckIds = [];
+        //     topLeftMoveOut = [];
+        //   }
+        // }
 
 
       }
@@ -532,20 +605,86 @@ class Piece {
     })
 
 
-    if (topLeft.length > 0) {
-      Array.prototype.push.apply(checkIds, topLeft);
+    if (topLeftCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, topLeftCheckIds);
     }
 
-    if (topLeftCheckDivs.length > 0) {
-      Array.prototype.push.apply(moveOut, topLeftCheckDivs);
+    if (topLeftMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, topLeftMoveOut);
     }
 
 
     numbersReversed.forEach(number => {
 
+      if (numbersReversed.indexOf(number) == (numbersReversed.length - 1)) {
+
+        var lastIterationNumber = number;
+
+      }
+
       /******************************************
        * MOVE BOTTOM (WHITE) / MOVE TOP (BLACK) *
        ******************************************/
+      // if (this.type == "queen" || this.type == "rook") {
+      //   id = parentDivIdLetter + number;
+
+      //   if (document.querySelector("#" + id) !== null) {
+
+
+      //     if (document.querySelector("#" + id).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 0) {
+      //       nextMovesIds.push(id);
+      //       bottomCheckIds.push(id);
+      //       bottomMoveOut.push(id);
+
+      //       if (document.querySelector("#" + id).id.includes(lastIterationNumber)) {
+
+      //         bottomCheckIds = [];
+      //         bottomMoveOut = [];
+      //       }
+
+      //     } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
+      //       bottomNumberOwn = 1;
+      //       bottomCheckIds = [];
+      //       bottomMoveOut = [];
+
+      //     } else if (!document.querySelector("#" + id).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 0) {
+      //       nextMovesIds.push(id)
+      //       bottomNumberOther = 1;
+      //       bottomMoveOut.push(id);
+
+      //       if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
+
+      //         bottomCheckIds.push(parentDivId);
+      //         bottomMoveOut = [];
+      //       } else {
+      //         bottomCheckIds = [];
+      //       }
+
+      //     } else if (document.querySelector("#" + id).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 1) {
+      //       if (document.querySelector("#" + id).id.includes(lastIterationNumber)) {
+      //         bottomMoveOut = [];
+      //       }
+
+      //     } else if (!document.querySelector("#" + id).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 1) {
+
+      //       bottomNumberOther = 2;
+
+      //       if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
+      //         bottomMoveOut.push(id);
+      //       } else {
+      //         bottomMoveOut = [];
+      //       }
+
+      //     }
+
+      //   } else if (document.querySelector("#" + id) == null && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+      //     let idnn = parentDivIdLetter + (numbersReversed[numbersReversed.indexOf(number) - 1]);
+      //     if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
+      //       bottomCheckIds = [];
+      //       bottomMoveOut = [];
+      //     }
+      //   }
+      // }
 
 
       if (this.type == "queen" || this.type == "rook") {
@@ -570,7 +709,13 @@ class Piece {
       }
     })
 
+    // if (BottomCheckIds.length > 0) {
+    //   Array.prototype.push.apply(checkIds, bottomCheckIds);
+    // }
 
+    // if (bottomMoveOut.length > 0) {
+    //   Array.prototype.push.apply(moveOut, bottomMoveOut);
+    // }
 
 
     if (checkIds.length > 0) {
@@ -591,7 +736,7 @@ class Piece {
       if (this.color == "white") {
         if (document.querySelector(".blackcheck") && document.querySelector("#" + move).classList.contains("blackcheck") && !piece.parentElement.classList.contains("moveoutblack")) {
           var nextMoveDiv = document.querySelector("#" + move);
-        } else if (!document.querySelector(".blackcheck")) {
+        } else if (!document.querySelector(".blackcheck") && !piece.parentElement.classList.contains("moveoutblack")) {
 
           var nextMoveDiv = document.querySelector("#" + move);
         }
@@ -601,7 +746,7 @@ class Piece {
       } else if (this.color == "black") {
         if (document.querySelector(".whitecheck") && document.querySelector("#" + move).classList.contains("whitecheck") && !piece.parentElement.classList.contains("moveoutwhite")) {
           var nextMoveDiv = document.querySelector("#" + move);
-        } else if (!document.querySelector(".whitecheck")) {
+        } else if (!document.querySelector(".whitecheck") && !piece.parentElement.classList.contains("moveoutwhite")) {
 
           var nextMoveDiv = document.querySelector("#" + move);
         }
