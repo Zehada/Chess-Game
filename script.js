@@ -17,13 +17,13 @@ for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if (j % 2 == 0) {
                 let square = document.createElement('div');
-                square.classList.add(chessboardLetters[j] + (chessboardNumber));
+                square.id = chessboardLetters[j] + (chessboardNumber);
                 square.style.backgroundColor = "white";
                 chessboard.appendChild(square);
 
             } else {
                 let square = document.createElement('div');
-                square.classList.add(chessboardLetters[j] + (chessboardNumber));
+                square.id = chessboardLetters[j] + (chessboardNumber);
                 square.style.backgroundColor = "brown";
                 chessboard.appendChild(square);
             }
@@ -32,13 +32,13 @@ for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             if (j % 2 > 0) {
                 let square = document.createElement('div');
-                square.classList.add(chessboardLetters[j] + (chessboardNumber));
+                square.id = chessboardLetters[j] + (chessboardNumber);
                 square.style.backgroundColor = "white";
                 chessboard.appendChild(square);
 
             } else {
                 let square = document.createElement('div');
-                square.classList.add(chessboardLetters[j] + (chessboardNumber));
+                square.id = chessboardLetters[j] + (chessboardNumber);
                 square.style.backgroundColor = "brown";
                 chessboard.appendChild(square);
             }
@@ -70,6 +70,7 @@ for (let letter of chessboardLetters) {
     quantity++;
 
 }
+
 
 
 quantity = 1;
@@ -121,6 +122,7 @@ whiteKing = new Piece("white", "king");
 whiteKing.initPiece();
 whiteKing.firstPosition(chessboardLetters[4], "1");
 
+
 blackKing = new Piece("black", "king");
 blackKing.initPiece();
 blackKing.firstPosition(chessboardLetters[4], "8");
@@ -138,10 +140,13 @@ blackQueen.firstPosition(chessboardLetters[3], "8");
 let round = 1;
 
 
+
 document.addEventListener("click", nextMove);
 
 
 function nextMove(e) {
+
+
     if (!document.querySelector(".promotion")) {
         let selectedElement = document.querySelector(".selected");
         let nextMoves = document.querySelectorAll(".next-move");
@@ -155,8 +160,6 @@ function nextMove(e) {
                     nextMove.parentElement.querySelector("img").remove();
                 }
                 nextMove.parentElement.appendChild(clonedElement);
-                console.log(selectedElement.parentElement);
-                console.log(clonedElement.parentElement);
 
 
 
@@ -283,6 +286,9 @@ function nextMove(e) {
         }
 
         if (round % 2 == 1) {
+
+
+
             if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
                 whitePawn.move(e.target);
             } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
@@ -296,7 +302,51 @@ function nextMove(e) {
             } else if (selectedElement !== null && selectedElement.classList.contains("white-knight")) {
                 whiteKnight.move(e.target);
             }
+
+            if (document.querySelector(".checkwhite")) {
+
+                let checkDivs = document.querySelectorAll(".checkwhite");
+                checkDivs.forEach(checkDiv => {
+                    checkDiv.classList.remove("checkwhite");
+                })
+            }
+
+            if (document.querySelector(".moveoutwhite")) {
+
+                let checkDivs = document.querySelectorAll(".moveoutwhite");
+                checkDivs.forEach(checkDiv => {
+                    checkDiv.classList.remove("moveoutwhite");
+                })
+            }
         } else {
+
+            let whitePieces = document.querySelectorAll(".white");
+            whitePieces.forEach(whitePiece => {
+                if (whitePiece.classList.contains("white-pawn")) {
+                    whitePawn.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-queen")) {
+                    whiteQueen.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-knight")) {
+                    whiteKnight.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-rook")) {
+                    whiteRook.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-bishop")) {
+                    whiteBishop.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-king")) {
+                    whiteKing.move(whitePiece);
+                }
+            })
+
+            let nextMovements = document.querySelectorAll(".next-move");
+            nextMovements.forEach(nextMove => {
+                if (nextMove.parentElement.querySelector(".black-king")) {
+                    nextMove.parentElement.querySelector(".black-king").classList.add("checked");
+                }
+                nextMove.remove();
+            })
+
+
+
             if (selectedElement !== null && selectedElement.classList.contains("black-pawn")) {
                 blackPawn.move(e.target);
             } else if (selectedElement !== null && selectedElement.classList.contains("black-queen")) {
@@ -311,6 +361,11 @@ function nextMove(e) {
                 blackKnight.move(e.target);
             }
         }
+
+
+
+
+
     } else if (document.querySelector(".promotion")) {
 
         let promotionSquareClassName = document.querySelector(".promotion").parentElement.className;

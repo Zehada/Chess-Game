@@ -43,22 +43,31 @@ class Piece {
 
   }
 
+
+
   firstPosition(letter, number) {
-    let square = document.querySelector("." + letter + number);
+    let square = document.querySelector("#" + letter + number);
     square.appendChild(piece);
   }
 
   move(piece) {
-    let parentDivClassName = piece.parentElement.className;
-    let parentDivClassNameNumber = Array.from(parentDivClassName)[1];
-    parentDivClassNameNumber = parseInt(parentDivClassNameNumber);
-    let parentDivClassNameLetter = Array.from(parentDivClassName)[0];
-    let nextMovesClassNames = [];
+    let parentDivId = piece.parentElement.id;
+    let parentDivIdNumber = Array.from(parentDivId)[1];
+    parentDivIdNumber = parseInt(parentDivIdNumber);
+    let parentDivIdLetter = Array.from(parentDivId)[0];
+    let nextMovesIds = [];
+    let checkIds = [];
+    let moveOut = [];
 
-    let indexOfParentDivClassNameLetter = chessboardLetters.indexOf(parentDivClassNameLetter);
+    window["topLeft" + this.color] = [];
 
-    let bottomDiagonalNextMoveClassNameNumber = parentDivClassNameNumber - 1;
-    let topDiagonalNextMoveClassNameNumber = parentDivClassNameNumber + 1;
+    let topLeftCheckDivs = [];
+
+
+    let indexOfParentDivIdLetter = chessboardLetters.indexOf(parentDivIdLetter);
+
+    let bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
+    let topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
     let lettersReversed = [];
     let numbersReversed = [];
 
@@ -87,7 +96,7 @@ class Piece {
     let leftLetterOwn = 0;
     let leftLetterOther = 0;
 
-    let className;
+    let id;
     let firstSquare;
 
 
@@ -96,23 +105,23 @@ class Piece {
      ****************************************************/
 
     if (this.type == "king") {
-      className = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+      id = parentDivIdLetter + (parentDivIdNumber + 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
 
 
     if (this.type == "pawn" && this.color == "white") {
-      className = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+      id = parentDivIdLetter + (parentDivIdNumber + 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
+      if (document.querySelector("#" + id) !== null) {
 
-        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".black")) {
-          nextMovesClassNames.push(className);
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && !document.querySelector("#" + id).querySelector(".black")) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -123,12 +132,12 @@ class Piece {
      * WHITE PAWN FIRST MOVE *
      *************************/
 
-    firstSquare = parentDivClassNameLetter + (parentDivClassNameNumber + 1).toString();
+    firstSquare = parentDivIdLetter + (parentDivIdNumber + 1).toString();
     if (this.type == "pawn" && this.color == "white" && !piece.classList.contains("moved")) {
-      className = parentDivClassNameLetter + (parentDivClassNameNumber + 2).toString();
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".black") && !document.querySelector("." + firstSquare).querySelector("." + this.color) && !document.querySelector("." + firstSquare).querySelector(".black")) {
-          nextMovesClassNames.push(className);
+      id = parentDivIdLetter + (parentDivIdNumber + 2).toString();
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && !document.querySelector("#" + id).querySelector(".black") && !document.querySelector("#" + firstSquare).querySelector("." + this.color) && !document.querySelector("#" + firstSquare).querySelector(".black")) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -137,12 +146,12 @@ class Piece {
      * BLACK PAWN FIRST MOVE *
      *************************/
 
-    firstSquare = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
+    firstSquare = parentDivIdLetter + (parentDivIdNumber - 1).toString();
     if (this.type == "pawn" && this.color == "black" && !piece.classList.contains("moved")) {
-      className = parentDivClassNameLetter + (parentDivClassNameNumber - 2).toString();
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".white") && !document.querySelector("." + firstSquare).querySelector("." + this.color) && !document.querySelector("." + firstSquare).querySelector(".white")) {
-          nextMovesClassNames.push(className);
+      id = parentDivIdLetter + (parentDivIdNumber - 2).toString();
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && !document.querySelector("#" + id).querySelector(".white") && !document.querySelector("#" + firstSquare).querySelector("." + this.color) && !document.querySelector("#" + firstSquare).querySelector(".white")) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -152,22 +161,22 @@ class Piece {
      ****************************************************/
 
     if (this.type == "king") {
-      className = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
+      id = parentDivIdLetter + (parentDivIdNumber - 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
 
     if (this.type == "pawn" && this.color == "black") {
-      className = parentDivClassNameLetter + (parentDivClassNameNumber - 1).toString();
+      id = parentDivIdLetter + (parentDivIdNumber - 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
+      if (document.querySelector("#" + id) !== null) {
 
-        if (!document.querySelector("." + className).querySelector("." + this.color) && !document.querySelector("." + className).querySelector(".white")) {
-          nextMovesClassNames.push(className);
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && !document.querySelector("#" + id).querySelector(".white")) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -178,11 +187,11 @@ class Piece {
      ****************************************************/
 
     if (this.type == "king") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber.toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -192,11 +201,11 @@ class Piece {
      ****************************************************/
 
     if (this.type == "king") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber.toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -207,23 +216,23 @@ class Piece {
      **********************************************************/
 
     if (this.type == "king") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber + 1).toString();
+      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber + 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
 
     if (this.type == "pawn" && this.color == "white") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber + 1).toString();
-      let RightSquare = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber + 1).toString();
+      let RightSquare = chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber.toString();
 
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black") || (document.querySelector("." + RightSquare).querySelector(".black.pep"))) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && document.querySelector("#" + id).querySelector(".black") || (document.querySelector("#" + RightSquare).querySelector(".black.pep"))) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -233,23 +242,23 @@ class Piece {
      ***************************************************************/
 
     if (this.type == "king") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber + 1).toString();
+      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber + 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
 
     if (this.type == "pawn" && this.color == "white") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber + 1).toString();
-      let leftSquare = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber + 1).toString();
+      let leftSquare = chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber.toString();
 
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".black") || (document.querySelector("." + leftSquare).querySelector(".black.pep"))) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && document.querySelector("#" + id).querySelector(".black") || (document.querySelector("#" + leftSquare).querySelector(".black.pep"))) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -259,23 +268,23 @@ class Piece {
      ***************************************************************/
 
     if (this.type == "king") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber - 1).toString();
+      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber - 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
 
     if (this.type == "pawn" && this.color == "black") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter + 1] + (parentDivClassNameNumber - 1).toString();
-      let leftSquare = chessboardLetters[indexOfParentDivClassNameLetter + 1] + parentDivClassNameNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber - 1).toString();
+      let leftSquare = chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber.toString();
 
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white") || (document.querySelector("." + leftSquare).querySelector(".white.pep"))) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && document.querySelector("#" + id).querySelector(".white") || (document.querySelector("#" + leftSquare).querySelector(".white.pep"))) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -285,23 +294,23 @@ class Piece {
      ***************************************************************/
 
     if (this.type == "king") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber - 1).toString();
+      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber - 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
     }
 
     if (this.type == "pawn" && this.color == "black") {
-      className = chessboardLetters[indexOfParentDivClassNameLetter - 1] + (parentDivClassNameNumber - 1).toString();
-      let RightSquare = chessboardLetters[indexOfParentDivClassNameLetter - 1] + parentDivClassNameNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber - 1).toString();
+      let RightSquare = chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber.toString();
 
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color) && document.querySelector("." + className).querySelector(".white") || (document.querySelector("." + RightSquare).querySelector(".white.pep"))) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color) && document.querySelector("#" + id).querySelector(".white") || (document.querySelector("#" + RightSquare).querySelector(".white.pep"))) {
+          nextMovesIds.push(id);
         }
       }
     }
@@ -313,11 +322,11 @@ class Piece {
      ***************************************************************/
 
     if (this.type == "knight") {
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 1] + (parentDivClassNameNumber + 2).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 1] + (parentDivIdNumber + 2).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -325,11 +334,11 @@ class Piece {
        * MOVE WHITE KNIGHT RIGHT TOP / MOVE BLACK KNIGHT LEFT BOTTOM *
        ***************************************************************/
 
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 2] + (parentDivClassNameNumber + 1).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 2] + (parentDivIdNumber + 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -337,11 +346,11 @@ class Piece {
        * MOVE WHITE KNIGHT TOP LEFT / MOVE BLACK KNIGHT BOTTOM RIGHT *
        ***************************************************************/
 
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 1] + (parentDivClassNameNumber + 2).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 1] + (parentDivIdNumber + 2).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -350,11 +359,11 @@ class Piece {
        * MOVE WHITE KNIGHT LEFT TOP / MOVE BLACK KNIGHT RIGHT BOTTOM *
        ***************************************************************/
 
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 2] + (parentDivClassNameNumber + 1).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 2] + (parentDivIdNumber + 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -362,11 +371,11 @@ class Piece {
        * MOVE WHITE KNIGHT LEFT BOTTOM / MOVE BLACK KNIGHT RIGHT TOP *
        ***************************************************************/
 
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 2] + (parentDivClassNameNumber - 1).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 2] + (parentDivIdNumber - 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -374,11 +383,11 @@ class Piece {
        * MOVE WHITE KNIGHT BOTTOM LEFT / MOVE BLACK KNIGHT TOP RIGHT *
        ***************************************************************/
 
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) - 1] + (parentDivClassNameNumber - 2).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 1] + (parentDivIdNumber - 2).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -386,11 +395,11 @@ class Piece {
        * MOVE WHITE KNIGHT BOTTOM RIGHT / MOVE BLACK KNIGHT TOP LEFT *
        ***************************************************************/
 
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 1] + (parentDivClassNameNumber - 2).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 1] + (parentDivIdNumber - 2).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -398,11 +407,11 @@ class Piece {
        * MOVE WHITE KNIGHT RIGHT BOTTOM / MOVE BLACK KNIGHT LEFT TOP *
        ***************************************************************/
 
-      className = chessboardLetters[chessboardLetters.indexOf(parentDivClassNameLetter) + 2] + (parentDivClassNameNumber - 1).toString();
+      id = chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 2] + (parentDivIdNumber - 1).toString();
 
-      if (document.querySelector("." + className) !== null) {
-        if (!document.querySelector("." + className).querySelector("." + this.color)) {
-          nextMovesClassNames.push(className);
+      if (document.querySelector("#" + id) !== null) {
+        if (!document.querySelector("#" + id).querySelector("." + this.color)) {
+          nextMovesIds.push(id);
         }
       }
 
@@ -415,29 +424,29 @@ class Piece {
 
     for (let letter of chessboardLetters) {
 
-      let nextMoveClassNameNumber = chessboardLetters.indexOf(letter) + 1
+      let nextMoveIdNumber = chessboardLetters.indexOf(letter) + 1
 
-      if (nextMoveClassNameNumber < parentDivClassNameNumber) {
-        numbersReversed.unshift(nextMoveClassNameNumber);
+      if (nextMoveIdNumber < parentDivIdNumber) {
+        numbersReversed.unshift(nextMoveIdNumber);
 
-      } else if (nextMoveClassNameNumber > parentDivClassNameNumber) {
+      } else if (nextMoveIdNumber > parentDivIdNumber) {
 
         /******************************************
          * MOVE TOP (WHITE) / MOVE BOTTOM (BLACK) *
          ******************************************/
 
         if (this.type == "queen" || this.type == "rook") {
-          className = parentDivClassNameLetter + nextMoveClassNameNumber.toString();
+          id = parentDivIdLetter + nextMoveIdNumber.toString();
 
-          if (document.querySelector("." + className) !== null) {
+          if (document.querySelector("#" + id) !== null) {
 
-            if (document.querySelector("." + className).innerHTML == "" && topNumberOwn == 0 && topNumberOther == 0) {
-              nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            if (document.querySelector("#" + id).innerHTML == "" && topNumberOwn == 0 && topNumberOther == 0) {
+              nextMovesIds.push(id);
+            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
               topNumberOwn = 1;
 
-            } else if (!document.querySelector("." + className).querySelector("." + this.color) && topNumberOther == 0 && topNumberOwn == 0) {
-              nextMovesClassNames.push(className)
+            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && topNumberOther == 0 && topNumberOwn == 0) {
+              nextMovesIds.push(id)
               topNumberOther = 1;
             }
           }
@@ -445,50 +454,50 @@ class Piece {
 
       }
 
-      if (chessboardLetters.indexOf(letter) < chessboardLetters.indexOf(parentDivClassNameLetter)) {
+      if (chessboardLetters.indexOf(letter) < chessboardLetters.indexOf(parentDivIdLetter)) {
         lettersReversed.unshift(letter);
 
-      } else if (chessboardLetters.indexOf(letter) > chessboardLetters.indexOf(parentDivClassNameLetter)) {
+      } else if (chessboardLetters.indexOf(letter) > chessboardLetters.indexOf(parentDivIdLetter)) {
 
         /******************************************
          * MOVE RIGHT (WHITE) / MOVE LEFT (BLACK) *
          ******************************************/
         if (this.type == "queen" || this.type == "rook") {
-          className = letter + parentDivClassNameNumber.toString();
+          id = letter + parentDivIdNumber.toString();
 
-          if (document.querySelector("." + className) !== null) {
+          if (document.querySelector("#" + id) !== null) {
 
-            if (document.querySelector("." + className).innerHTML == "" && rightLetterOwn == 0 && rightLetterOther == 0) {
-              nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            if (document.querySelector("#" + id).innerHTML == "" && rightLetterOwn == 0 && rightLetterOther == 0) {
+              nextMovesIds.push(id);
+            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
               rightLetterOwn = 1;
 
-            } else if (!document.querySelector("." + className).querySelector("." + this.color) && rightLetterOwn == 0 && rightLetterOther == 0) {
-              nextMovesClassNames.push(className)
+            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && rightLetterOwn == 0 && rightLetterOther == 0) {
+              nextMovesIds.push(id)
               rightLetterOther = 1;
             }
           }
         }
 
-        let diagonalNextMoveClassNameNumberMinus = bottomDiagonalNextMoveClassNameNumber--;
-        let diagonalNextMoveClassNameNumberPlus = topDiagonalNextMoveClassNameNumber++;
+        let diagonalNextMoveIdNumberMinus = bottomDiagonalNextMoveIdNumber--;
+        let diagonalNextMoveIdNumberPlus = topDiagonalNextMoveIdNumber++;
 
         /*****************************************************
          * MOVE RIGHT BOTTOM (WHITE) / MOVE LEFT TOP (BLACK) *
          *****************************************************/
 
         if (this.type == "queen" || this.type == "bishop") {
-          className = letter + diagonalNextMoveClassNameNumberMinus.toString();
+          id = letter + diagonalNextMoveIdNumberMinus.toString();
 
-          if (document.querySelector("." + className) !== null) {
+          if (document.querySelector("#" + id) !== null) {
 
-            if (document.querySelector("." + className).innerHTML == "" && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
-              nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            if (document.querySelector("#" + id).innerHTML == "" && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
+              nextMovesIds.push(id);
+            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
               rightBottomLetterOwn = 1;
 
-            } else if (!document.querySelector("." + className).querySelector("." + this.color) && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
-              nextMovesClassNames.push(className)
+            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
+              nextMovesIds.push(id)
               rightBottomLetterOther = 1;
             }
           }
@@ -499,17 +508,17 @@ class Piece {
            * MOVE RIGHT TOP (WHITE) / MOVE LEFT BOTTOM (BLACK) *
            *****************************************************/
 
-          className = letter + diagonalNextMoveClassNameNumberPlus.toString();
+          id = letter + diagonalNextMoveIdNumberPlus.toString();
 
-          if (document.querySelector("." + className) !== null) {
+          if (document.querySelector("#" + id) !== null) {
 
-            if (document.querySelector("." + className).innerHTML == "" && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
-              nextMovesClassNames.push(className);
-            } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+            if (document.querySelector("#" + id).innerHTML == "" && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
+              nextMovesIds.push(id);
+            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
               rightTopLetterOwn = 1;
 
-            } else if (!document.querySelector("." + className).querySelector("." + this.color) && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
-              nextMovesClassNames.push(className)
+            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
+              nextMovesIds.push(id)
               rightTopLetterOther = 1;
             }
           }
@@ -517,54 +526,59 @@ class Piece {
       }
     }
 
-    bottomDiagonalNextMoveClassNameNumber = parentDivClassNameNumber - 1;
-    topDiagonalNextMoveClassNameNumber = parentDivClassNameNumber + 1;
+    bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
+    topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
 
 
 
     lettersReversed.forEach(letter => {
 
+      if (lettersReversed.indexOf(letter) == (lettersReversed.length - 1)) {
+
+        var lastIterationLetter = letter;
+
+      }
       /******************************************
        * MOVE LEFT (WHITE) / MOVE RIGHT (BLACK) *
        ******************************************/
 
       if (this.type == "queen" || this.type == "rook") {
 
-        className = letter + parentDivClassNameNumber.toString();
+        id = letter + parentDivIdNumber.toString();
 
-        if (document.querySelector("." + className) !== null) {
+        if (document.querySelector("#" + id) !== null) {
 
-          if (document.querySelector("." + className).innerHTML == "" && leftLetterOwn == 0 && leftLetterOther == 0) {
-            nextMovesClassNames.push(className);
-          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+          if (document.querySelector("#" + id).innerHTML == "" && leftLetterOwn == 0 && leftLetterOther == 0) {
+            nextMovesIds.push(id);
+          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
             leftLetterOwn = 1;
 
-          } else if (!document.querySelector("." + className).querySelector("." + this.color) && leftLetterOwn == 0 && leftLetterOther == 0) {
-            nextMovesClassNames.push(className)
+          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftLetterOwn == 0 && leftLetterOther == 0) {
+            nextMovesIds.push(id)
             leftLetterOther = 1;
           }
         }
       }
 
 
-      let diagonalNextMoveClassNameNumberMinus = bottomDiagonalNextMoveClassNameNumber--;
-      let diagonalNextMoveClassNameNumberPlus = topDiagonalNextMoveClassNameNumber++;
+      let diagonalNextMoveIdNumberMinus = bottomDiagonalNextMoveIdNumber--;
+      let diagonalNextMoveIdNumberPlus = topDiagonalNextMoveIdNumber++;
 
       /*****************************************************
        * MOVE LEFT BOTTOM (WHITE) / MOVE RIGHT TOP (BLACK) *
        *****************************************************/
       if (this.type == "queen" || this.type == "bishop") {
-        className = letter + diagonalNextMoveClassNameNumberMinus.toString();
+        id = letter + diagonalNextMoveIdNumberMinus.toString();
 
-        if (document.querySelector("." + className) !== null) {
+        if (document.querySelector("#" + id) !== null) {
 
-          if (document.querySelector("." + className).innerHTML == "" && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
-            nextMovesClassNames.push(className);
-          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+          if (document.querySelector("#" + id).innerHTML == "" && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
+            nextMovesIds.push(id);
+          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
             leftBottomLetterOwn = 1;
 
-          } else if (!document.querySelector("." + className).querySelector("." + this.color) && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
-            nextMovesClassNames.push(className)
+          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
+            nextMovesIds.push(id)
             leftBottomLetterOther = 1;
           }
         }
@@ -574,25 +588,80 @@ class Piece {
          * MOVE LEFT TOP (WHITE) / MOVE RIGHT BOTTOM (BLACK) *
          *****************************************************/
 
-        className = letter + diagonalNextMoveClassNameNumberPlus.toString();
+        id = letter + diagonalNextMoveIdNumberPlus.toString();
 
-        if (document.querySelector("." + className) !== null) {
+        if (document.querySelector("#" + id) !== null) {
 
-          if (document.querySelector("." + className).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-            nextMovesClassNames.push(className);
-          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+
+          if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+            nextMovesIds.push(id);
+            window["topLeft" + this.color].push(id);
+            topLeftCheckDivs.push(id);
+
+            if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
+
+              window["topLeft" + this.color] = [];
+              topLeftCheckDivs = [];
+            }
+
+          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
             leftTopLetterOwn = 1;
+            window["topLeft" + this.color] = [];
+            topLeftCheckDivs = [];
 
-          } else if (!document.querySelector("." + className).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-            nextMovesClassNames.push(className)
+          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+            nextMovesIds.push(id)
             leftTopLetterOther = 1;
+            topLeftCheckDivs.push(id);
+
+            if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
+              // window["topLeft" + this.color].push(id);
+              window["topLeft" + this.color].push(parentDivId);
+              topLeftCheckDivs = [];
+            } else {
+              window["topLeft" + this.color] = [];
+            }
+
+          } else if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
+            if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
+              topLeftCheckDivs = [];
+            }
+
+          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
+
+            leftTopLetterOther = 2;
+            // topLeftCheckDivs.push(id);
+
+            if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
+              // window["topLeft" + this.color].push(id);
+              topLeftCheckDivs.push(id);
+            } else {
+              topLeftCheckDivs = [];
+            }
+
+          }
+
+        } else if (document.querySelector("#" + id) == null && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
+          let idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus.toString() - 1);
+          if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
+            window["topLeft" + this.color] = [];
+            topLeftCheckDivs = [];
           }
         }
 
+
       }
+
     })
 
 
+    if (window["topLeft" + this.color].length > 0) {
+      Array.prototype.push.apply(checkIds, window["topLeft" + this.color]);
+    }
+
+    if (topLeftCheckDivs.length > 0) {
+      Array.prototype.push.apply(moveOut, topLeftCheckDivs);
+    }
 
 
     numbersReversed.forEach(number => {
@@ -600,33 +669,65 @@ class Piece {
       /******************************************
        * MOVE BOTTOM (WHITE) / MOVE TOP (BLACK) *
        ******************************************/
+
+
       if (this.type == "queen" || this.type == "rook") {
-        className = parentDivClassNameLetter + number;
+        id = parentDivIdLetter + number;
 
-        if (document.querySelector("." + className) !== null) {
+        if (document.querySelector("#" + id) !== null) {
 
-          if (document.querySelector("." + className).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 0) {
-            nextMovesClassNames.push(className);
-          } else if (document.querySelector("." + className).querySelector("." + this.color)) {
+          if (document.querySelector("#" + id).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 0) {
+            nextMovesIds.push(id);
+
+          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
             bottomNumberOwn = 1;
 
-          } else if (!document.querySelector("." + className).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 0) {
-            nextMovesClassNames.push(className)
+          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 0) {
+            nextMovesIds.push(id)
             bottomNumberOther = 1;
+
           }
         }
+
       }
     })
 
 
-    nextMovesClassNames.forEach(move => {
-      let nextMoveDiv = document.querySelector("." + move);
-      let moveButton = document.createElement("div");
-      moveButton.classList.add("next-move");
-      nextMoveDiv.appendChild(moveButton);
+
+
+    if (checkIds.length > 0) {
+      checkIds.forEach(checkId => {
+        document.querySelector("#" + checkId).classList.add("check" + this.color);
+      })
+    }
+
+    if (moveOut.length > 0) {
+      moveOut.forEach(moveout => {
+        document.querySelector("#" + moveout).classList.add("moveout" + this.color);
+      })
+    }
+
+    nextMovesIds.forEach(move => {
+
+
+      if (!document.querySelector(".checkwhite") && !document.querySelector(".checkblack") && !piece.parentElement.classList.contains("moveoutwhite")) {
+        var nextMoveDiv = document.querySelector("#" + move);
+      }
+
+      else if (document.querySelector("#" + move).classList.contains("checkwhite")) {
+        console.log("hello")
+        var nextMoveDiv = document.querySelector("#" + move);
+      }
+
+      if (nextMoveDiv !== undefined) {
+        let moveButton = document.createElement("div");
+        moveButton.classList.add("next-move");
+        nextMoveDiv.appendChild(moveButton);
+      }
 
     })
 
-
   }
+
+
 }
