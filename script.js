@@ -287,7 +287,35 @@ function nextMove(e) {
 
         if (round % 2 == 1) {
 
+            let blackPieces = document.querySelectorAll(".black");
+            blackPieces.forEach(blackPiece => {
+                if (blackPiece.classList.contains("black-pawn")) {
+                    blackPawn.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-queen")) {
+                    blackQueen.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-knight")) {
+                    blackKnight.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-rook")) {
+                    blackRook.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-bishop")) {
+                    blackBishop.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-king")) {
+                    blackKing.move(blackPiece);
+                }
+            })
 
+            let nextMovements = document.querySelectorAll(".next-move");
+            nextMovements.forEach(nextMove => {
+                if (!nextMove.parentElement.classList.contains("noblackmove")) {
+                    nextMove.parentElement.classList.add("blackmove");
+                }
+                nextMove.remove();
+            })
+
+            let noBlackMove = document.querySelectorAll(".noblackmove");
+            noBlackMove.forEach(blackMove => {
+                blackMove.classList.remove("noblackmove");
+            })
 
             if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
                 whitePawn.move(e.target);
@@ -303,11 +331,11 @@ function nextMove(e) {
                 whiteKnight.move(e.target);
             }
 
-            if (document.querySelector(".checkwhite")) {
+            if (document.querySelector(".whitecheck")) {
 
-                let checkDivs = document.querySelectorAll(".checkwhite");
+                let checkDivs = document.querySelectorAll(".whitecheck");
                 checkDivs.forEach(checkDiv => {
-                    checkDiv.classList.remove("checkwhite");
+                    checkDiv.classList.remove("whitecheck");
                 })
             }
 
@@ -316,6 +344,14 @@ function nextMove(e) {
                 let checkDivs = document.querySelectorAll(".moveoutwhite");
                 checkDivs.forEach(checkDiv => {
                     checkDiv.classList.remove("moveoutwhite");
+                })
+            }
+
+            if (document.querySelector(".whitemove")) {
+
+                let whiteMoves = document.querySelectorAll(".whitemove");
+                whiteMoves.forEach(whiteMove => {
+                    whiteMove.classList.remove("whitemove");
                 })
             }
         } else {
@@ -339,10 +375,15 @@ function nextMove(e) {
 
             let nextMovements = document.querySelectorAll(".next-move");
             nextMovements.forEach(nextMove => {
-                if (nextMove.parentElement.querySelector(".black-king")) {
-                    nextMove.parentElement.querySelector(".black-king").classList.add("checked");
+                if (!nextMove.parentElement.classList.contains("nowhitemove")) {
+                    nextMove.parentElement.classList.add("whitemove");
                 }
                 nextMove.remove();
+            })
+
+            let noWhiteMove = document.querySelectorAll(".nowhitemove");
+            noWhiteMove.forEach(whiteMove => {
+                whiteMove.classList.remove("nowhitemove");
             })
 
 
