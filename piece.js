@@ -62,6 +62,9 @@ class Piece {
     let topLeftCheckIds = [];
     let topLeftMoveOut = [];
 
+    let bottomLeftCheckIds = [];
+    let bottomLeftMoveOut = [];
+
     let bottomCheckIds = [];
     let bottomMoveOut = [];
 
@@ -88,13 +91,17 @@ class Piece {
     let bottomNumberOwn = 0;
     let bottomNumberOther = 0;
 
-    let leftBottomLetterOwn = 0;
-    let leftBottomLetterOther = 0;
-
-    let leftTopLetterOwn = 0;
-    let leftTopLetterOther = 0;
-
     let topLeft = {
+      own: 0,
+      other: 0
+    }
+
+    let bottomLeft = {
+      own: 0,
+      other: 0
+    }
+
+    let bottom = {
       own: 0,
       other: 0
     }
@@ -320,9 +327,7 @@ class Piece {
           }
 
         } else if (document.querySelector("#" + id).querySelector("." + color)) {
-          console.log("hello")
           elements.own = 1;
-          console.log(topLeft.own, piece)
           positionCheckIds.length = 0;
           positionMoveOut.length = 0;
 
@@ -330,6 +335,11 @@ class Piece {
           nextMovesIds.push(id)
           elements.other = 1;
           positionMoveOut.push(id);
+
+          if (document.querySelector("#" + id).id.includes(lastIteration)) {
+            positionMoveOut.length = 0;
+          }
+
 
           if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
 
@@ -356,13 +366,20 @@ class Piece {
 
         }
 
+
+
       } else if (document.querySelector("#" + id) == null && elements.own == 0 && elements.other == 0) {
         if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
           positionCheckIds.length = 0;
           positionMoveOut.length = 0;
+        } else if (document.querySelector("#" + idnn) !== null && !document.querySelector("#" + idnn).querySelector("." + color)) {
+          positionMoveOut.length = 0;
         }
       }
 
+      // if (elements.other !== 2) {
+      //   positionMoveOut.length = 0;
+      // }
     }
 
     for (let letter of chessboardLetters) {
@@ -510,105 +527,36 @@ class Piece {
       let diagonalNextMoveIdNumberMinus = bottomDiagonalNextMoveIdNumber--;
       let diagonalNextMoveIdNumberPlus = topDiagonalNextMoveIdNumber++;
 
-      /*****************************************************
-       * MOVE LEFT BOTTOM (WHITE) / MOVE RIGHT TOP (BLACK) *
-       *****************************************************/
+
       if (this.type == "queen" || this.type == "bishop") {
+        // Move bottom left
         id = letter + diagonalNextMoveIdNumberMinus.toString();
+        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberMinus + 1);
 
-        if (document.querySelector("#" + id) !== null) {
+        pieceMoves(id, idnn, this.color, lastIterationLetter, bottomLeft, bottomLeftCheckIds, bottomLeftMoveOut);
 
-          if (document.querySelector("#" + id).innerHTML == "" && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
-            nextMovesIds.push(id);
-          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-            leftBottomLetterOwn = 1;
-
-          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftBottomLetterOwn == 0 && leftBottomLetterOther == 0) {
-            nextMovesIds.push(id)
-            leftBottomLetterOther = 1;
-          }
-        }
-
-
-        /*****************************************************
-         * MOVE LEFT TOP (WHITE) / MOVE RIGHT BOTTOM (BLACK) *
-         *****************************************************/
-
+        // Move top left
         id = letter + diagonalNextMoveIdNumberPlus.toString();
-
-        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus.toString() - 1);
-
+        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus - 1);
 
         pieceMoves(id, idnn, this.color, lastIterationLetter, topLeft, topLeftCheckIds, topLeftMoveOut);
-
-
-        // if (document.querySelector("#" + id) !== null) {
-
-
-        //   if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-        //     nextMovesIds.push(id);
-        //     topLeftCheckIds.push(id);
-        //     topLeftMoveOut.push(id);
-
-        //     if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
-
-        //       topLeftCheckIds = [];
-        //       topLeftMoveOut = [];
-        //     }
-
-        //   } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-        //     leftTopLetterOwn = 1;
-        //     topLeftCheckIds = [];
-        //     topLeftMoveOut = [];
-
-        //   } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-        //     nextMovesIds.push(id)
-        //     leftTopLetterOther = 1;
-        //     topLeftMoveOut.push(id);
-
-        //     if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
-
-        //       topLeftCheckIds.push(parentDivId);
-        //       topLeftMoveOut = [];
-        //     } else {
-        //       topLeftCheckIds = [];
-        //     }
-
-        //   } else if (document.querySelector("#" + id).innerHTML == "" && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
-        //     if (document.querySelector("#" + id).id.includes(lastIterationLetter)) {
-        //       topLeftMoveOut = [];
-        //     }
-
-        //   } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftTopLetterOwn == 0 && leftTopLetterOther == 1) {
-
-        //     leftTopLetterOther = 2;
-
-        //     if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
-        //       topLeftMoveOut.push(id);
-        //     } else {
-        //       topLeftMoveOut = [];
-        //     }
-
-        //   }
-
-        // } else if (document.querySelector("#" + id) == null && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-        //   let idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus.toString() - 1);
-        //   if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
-        //     topLeftCheckIds = [];
-        //     topLeftMoveOut = [];
-        //   }
-        // }
-
 
       }
 
     })
 
 
+    if (bottomLeftCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, bottomLeftCheckIds);
+    }
+    if (bottomLeftMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, bottomLeftMoveOut);
+    }
+
+
     if (topLeftCheckIds.length > 0) {
       Array.prototype.push.apply(checkIds, topLeftCheckIds);
     }
-
     if (topLeftMoveOut.length > 0) {
       Array.prototype.push.apply(moveOut, topLeftMoveOut);
     }
@@ -617,106 +565,31 @@ class Piece {
     numbersReversed.forEach(number => {
 
       if (numbersReversed.indexOf(number) == (numbersReversed.length - 1)) {
-
         var lastIterationNumber = number;
-
       }
-
-      /******************************************
-       * MOVE BOTTOM (WHITE) / MOVE TOP (BLACK) *
-       ******************************************/
-      // if (this.type == "queen" || this.type == "rook") {
-      //   id = parentDivIdLetter + number;
-
-      //   if (document.querySelector("#" + id) !== null) {
-
-
-      //     if (document.querySelector("#" + id).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 0) {
-      //       nextMovesIds.push(id);
-      //       bottomCheckIds.push(id);
-      //       bottomMoveOut.push(id);
-
-      //       if (document.querySelector("#" + id).id.includes(lastIterationNumber)) {
-
-      //         bottomCheckIds = [];
-      //         bottomMoveOut = [];
-      //       }
-
-      //     } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-      //       bottomNumberOwn = 1;
-      //       bottomCheckIds = [];
-      //       bottomMoveOut = [];
-
-      //     } else if (!document.querySelector("#" + id).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 0) {
-      //       nextMovesIds.push(id)
-      //       bottomNumberOther = 1;
-      //       bottomMoveOut.push(id);
-
-      //       if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
-
-      //         bottomCheckIds.push(parentDivId);
-      //         bottomMoveOut = [];
-      //       } else {
-      //         bottomCheckIds = [];
-      //       }
-
-      //     } else if (document.querySelector("#" + id).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 1) {
-      //       if (document.querySelector("#" + id).id.includes(lastIterationNumber)) {
-      //         bottomMoveOut = [];
-      //       }
-
-      //     } else if (!document.querySelector("#" + id).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 1) {
-
-      //       bottomNumberOther = 2;
-
-      //       if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
-      //         bottomMoveOut.push(id);
-      //       } else {
-      //         bottomMoveOut = [];
-      //       }
-
-      //     }
-
-      //   } else if (document.querySelector("#" + id) == null && leftTopLetterOwn == 0 && leftTopLetterOther == 0) {
-      //     let idnn = parentDivIdLetter + (numbersReversed[numbersReversed.indexOf(number) - 1]);
-      //     if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
-      //       bottomCheckIds = [];
-      //       bottomMoveOut = [];
-      //     }
-      //   }
-      // }
-
 
       if (this.type == "queen" || this.type == "rook") {
+
+        // Move bottom
         id = parentDivIdLetter + number;
+        idnn = parentDivIdLetter + (numbersReversed[numbersReversed.indexOf(number) - 1]);
 
-        if (document.querySelector("#" + id) !== null) {
-
-          if (document.querySelector("#" + id).innerHTML == "" && bottomNumberOwn == 0 && bottomNumberOther == 0) {
-            nextMovesIds.push(id);
-
-          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-            bottomNumberOwn = 1;
-
-
-          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && bottomNumberOwn == 0 && bottomNumberOther == 0) {
-            nextMovesIds.push(id)
-            bottomNumberOther = 1;
-
-          }
-        }
+        pieceMoves(id, idnn, this.color, lastIterationNumber, bottom, bottomCheckIds, bottomMoveOut);
 
       }
+
     })
 
-    // if (BottomCheckIds.length > 0) {
-    //   Array.prototype.push.apply(checkIds, bottomCheckIds);
-    // }
+    if (bottomCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, bottomCheckIds);
+    }
 
-    // if (bottomMoveOut.length > 0) {
-    //   Array.prototype.push.apply(moveOut, bottomMoveOut);
-    // }
+    if (bottomMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, bottomMoveOut);
+    }
 
+    console.log(idnn)
+    console.log(bottomLeftCheckIds, piece);
 
     if (checkIds.length > 0) {
       checkIds.forEach(checkId => {
