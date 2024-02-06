@@ -352,6 +352,8 @@ class Piece {
         } else if (document.querySelector("#" + id).innerHTML == "" && elements.own == 0 && elements.other == 1) {
           if (document.querySelector("#" + id).id.includes(lastIteration)) {
             positionMoveOut.length = 0;
+          } else {
+            positionMoveOut.push(id);
           }
 
         } else if (!document.querySelector("#" + id).querySelector("." + color) && elements.own == 0 && elements.other == 1) {
@@ -359,7 +361,8 @@ class Piece {
           elements.other = 2;
 
           if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
-            positionMoveOut.push(id);
+            // positionMoveOut.push(id);
+            positionMoveOut.push(parentDivId);
           } else {
             positionMoveOut.length = 0;
           }
@@ -612,7 +615,11 @@ class Piece {
         } else if (!document.querySelector(".blackcheck") && !piece.parentElement.classList.contains("moveoutblack")) {
 
           var nextMoveDiv = document.querySelector("#" + move);
+        } else if (piece.parentElement.classList.contains("moveoutblack") && document.querySelector("#" + move).classList.contains("moveoutblack")) {
+          var nextMoveDiv = document.querySelector("#" + move);
         }
+
+
         if (this.type == "king") {
           var nextMoveDiv = document.querySelector("#" + move);
         }
@@ -621,6 +628,8 @@ class Piece {
           var nextMoveDiv = document.querySelector("#" + move);
         } else if (!document.querySelector(".whitecheck") && !piece.parentElement.classList.contains("moveoutwhite")) {
 
+          var nextMoveDiv = document.querySelector("#" + move);
+        } else if (piece.parentElement.classList.contains("moveoutwhite") && document.querySelector("#" + move).classList.contains("moveoutwhite")) {
           var nextMoveDiv = document.querySelector("#" + move);
         }
 
