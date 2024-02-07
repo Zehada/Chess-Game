@@ -59,6 +59,21 @@ class Piece {
     let checkIds = [];
     let moveOut = [];
 
+    let topCheckIds = [];
+    let topMoveOut = [];
+
+    let rightCheckIds = [];
+    let rightMoveOut = [];
+
+    let bottomRightCheckIds = [];
+    let bottomRightMoveOut = [];
+
+    let topRightCheckIds = [];
+    let topRightMoveOut = [];
+
+    let leftCheckIds = [];
+    let leftMoveOut = [];
+
     let topLeftCheckIds = [];
     let topLeftMoveOut = [];
 
@@ -76,20 +91,31 @@ class Piece {
     let numbersReversed = [];
 
 
-    let rightBottomLetterOwn = 0;
-    let rightBottomLetterOther = 0;
+    let top = {
+      own: 0,
+      other: 0
+    }
 
-    let rightTopLetterOwn = 0;
-    let rightTopLetterOther = 0;
+    let right = {
+      own: 0,
+      other: 0
+    }
 
-    let rightLetterOwn = 0;
-    let rightLetterOther = 0;
+    let bottomRight = {
+      own: 0,
+      other: 0
+    }
 
-    let topNumberOwn = 0;
-    let topNumberOther = 0;
+    let topRight = {
+      own: 0,
+      other: 0
+    }
 
-    let bottomNumberOwn = 0;
-    let bottomNumberOther = 0;
+    let left = {
+      own: 0,
+      other: 0
+    }
+
 
     let topLeft = {
       own: 0,
@@ -106,9 +132,6 @@ class Piece {
       other: 0
     }
 
-    let leftLetterOwn = 0;
-    let leftLetterOther = 0;
-
     let id;
     let idnn;
     let firstSquare;
@@ -121,14 +144,14 @@ class Piece {
      ********/
 
     if (this.type == "king") {
-      idList.push(parentDivIdLetter + (parentDivIdNumber + 1).toString());
-      idList.push(parentDivIdLetter + (parentDivIdNumber - 1).toString());
-      idList.push(chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber.toString());
-      idList.push(chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber.toString());
-      idList.push(chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber + 1).toString());
-      idList.push(chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber + 1).toString());
-      idList.push(chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber - 1).toString());
-      idList.push(chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber - 1).toString());
+      idList.push(parentDivIdLetter + (parentDivIdNumber + 1));
+      idList.push(parentDivIdLetter + (parentDivIdNumber - 1));
+      idList.push(chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber);
+      idList.push(chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber);
+      idList.push(chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber + 1));
+      idList.push(chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber + 1));
+      idList.push(chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber - 1));
+      idList.push(chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber - 1));
 
       idList.forEach(id => {
         if (document.querySelector("#" + id) !== null) {
@@ -152,7 +175,7 @@ class Piece {
 
     // move one square
     if (this.type == "pawn" && this.color == "white") {
-      id = parentDivIdLetter + (parentDivIdNumber + 1).toString();
+      id = parentDivIdLetter + (parentDivIdNumber + 1);
 
       if (document.querySelector("#" + id) !== null) {
 
@@ -166,8 +189,8 @@ class Piece {
 
     // Move two squares
     if (this.type == "pawn" && this.color == "white" && !piece.classList.contains("moved")) {
-      firstSquare = parentDivIdLetter + (parentDivIdNumber + 1).toString();
-      id = parentDivIdLetter + (parentDivIdNumber + 2).toString();
+      firstSquare = parentDivIdLetter + (parentDivIdNumber + 1);
+      id = parentDivIdLetter + (parentDivIdNumber + 2);
       if (document.querySelector("#" + id) !== null) {
         if (!document.querySelector("#" + id).querySelector("." + this.color) && !document.querySelector("#" + id).querySelector(".black") && !document.querySelector("#" + firstSquare).querySelector("." + this.color) && !document.querySelector("#" + firstSquare).querySelector(".black")) {
           nextMovesIds.push(id);
@@ -177,10 +200,10 @@ class Piece {
       }
     }
 
-    // Move diagonal top right
+    // Move top right
     if (this.type == "pawn" && this.color == "white") {
-      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber + 1).toString();
-      let RightSquare = chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber + 1);
+      let RightSquare = chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber;
 
 
       if (document.querySelector("#" + id) !== null) {
@@ -195,10 +218,10 @@ class Piece {
       }
     }
 
-    // Move diagonal top left
+    // Move top left
     if (this.type == "pawn" && this.color == "white") {
-      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber + 1).toString();
-      let leftSquare = chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber + 1);
+      let leftSquare = chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber;
 
 
       if (document.querySelector("#" + id) !== null) {
@@ -220,7 +243,7 @@ class Piece {
 
     // move one square
     if (this.type == "pawn" && this.color == "black") {
-      id = parentDivIdLetter + (parentDivIdNumber - 1).toString();
+      id = parentDivIdLetter + (parentDivIdNumber - 1);
 
       if (document.querySelector("#" + id) !== null) {
 
@@ -234,8 +257,8 @@ class Piece {
 
     // Move two squares
     if (this.type == "pawn" && this.color == "black" && !piece.classList.contains("moved")) {
-      firstSquare = parentDivIdLetter + (parentDivIdNumber - 1).toString();
-      id = parentDivIdLetter + (parentDivIdNumber - 2).toString();
+      firstSquare = parentDivIdLetter + (parentDivIdNumber - 1);
+      id = parentDivIdLetter + (parentDivIdNumber - 2);
       if (document.querySelector("#" + id) !== null) {
         if (!document.querySelector("#" + id).querySelector("." + this.color) && !document.querySelector("#" + id).querySelector(".white") && !document.querySelector("#" + firstSquare).querySelector("." + this.color) && !document.querySelector("#" + firstSquare).querySelector(".white")) {
           nextMovesIds.push(id);
@@ -245,10 +268,10 @@ class Piece {
       }
     }
 
-    // Move diagonal top right
+    // Move top right
     if (this.type == "pawn" && this.color == "black") {
-      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber - 1).toString();
-      let RightSquare = chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter - 1] + (parentDivIdNumber - 1);
+      let RightSquare = chessboardLetters[indexOfParentDivIdLetter - 1] + parentDivIdNumber;
 
 
       if (document.querySelector("#" + id) !== null) {
@@ -263,10 +286,10 @@ class Piece {
       }
     }
 
-    // Move diagonal top left
+    // Move top left
     if (this.type == "pawn" && this.color == "black") {
-      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber - 1).toString();
-      let leftSquare = chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber.toString();
+      id = chessboardLetters[indexOfParentDivIdLetter + 1] + (parentDivIdNumber - 1);
+      let leftSquare = chessboardLetters[indexOfParentDivIdLetter + 1] + parentDivIdNumber;
 
       if (document.querySelector("#" + id) !== null) {
         document.querySelector("#" + id).classList.add("blackmove");
@@ -284,14 +307,14 @@ class Piece {
      * KNIGHT *
      **********/
     if (this.type == "knight") {
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 2] + (parentDivIdNumber + 1).toString());
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 1] + (parentDivIdNumber + 2).toString());
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 2] + (parentDivIdNumber + 1).toString());
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 2] + (parentDivIdNumber - 1).toString());
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 1] + (parentDivIdNumber - 2).toString());
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 1] + (parentDivIdNumber - 2).toString());
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 2] + (parentDivIdNumber - 1).toString());
-      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 1] + (parentDivIdNumber + 2).toString());
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 2] + (parentDivIdNumber + 1));
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 1] + (parentDivIdNumber + 2));
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 2] + (parentDivIdNumber + 1));
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 2] + (parentDivIdNumber - 1));
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) - 1] + (parentDivIdNumber - 2));
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 1] + (parentDivIdNumber - 2));
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 2] + (parentDivIdNumber - 1));
+      idList.push(chessboardLetters[chessboardLetters.indexOf(parentDivIdLetter) + 1] + (parentDivIdNumber + 2));
 
       idList.forEach(id => {
         if (document.querySelector("#" + id) !== null) {
@@ -311,6 +334,7 @@ class Piece {
 
 
     function pieceMoves(id, idnn, color, lastIteration, elements, positionCheckIds, positionMoveOut) {
+      // idnn = id non null
 
       if (document.querySelector("#" + id) !== null) {
 
@@ -379,15 +403,14 @@ class Piece {
           positionMoveOut.length = 0;
         }
       }
-
-      // if (elements.other !== 2) {
-      //   positionMoveOut.length = 0;
-      // }
     }
 
     for (let letter of chessboardLetters) {
 
-
+      if (chessboardLetters.indexOf(letter) == (chessboardLetters.length - 1)) {
+        var lastIterationLetterOne = letter;
+        var lastIterationNumberOne = chessboardLetters.indexOf(letter);
+      }
 
       let nextMoveIdNumber = chessboardLetters.indexOf(letter) + 1
 
@@ -396,26 +419,14 @@ class Piece {
 
       } else if (nextMoveIdNumber > parentDivIdNumber) {
 
-        /******************************************
-         * MOVE TOP (WHITE) / MOVE BOTTOM (BLACK) *
-         ******************************************/
-
         if (this.type == "queen" || this.type == "rook") {
-          id = parentDivIdLetter + nextMoveIdNumber.toString();
 
-          if (document.querySelector("#" + id) !== null) {
+          // Move top
+          id = parentDivIdLetter + nextMoveIdNumber;
+          idnn = parentDivIdLetter + (nextMoveIdNumber - 1);
 
-            if (document.querySelector("#" + id).innerHTML == "" && topNumberOwn == 0 && topNumberOther == 0) {
-              nextMovesIds.push(id);
-            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-              topNumberOwn = 1;
-              document.querySelector("#" + id).classList.add("whitemove");
+          pieceMoves(id, idnn, this.color, lastIterationNumberOne, top, topCheckIds, topMoveOut);
 
-            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && topNumberOther == 0 && topNumberOwn == 0) {
-              nextMovesIds.push(id)
-              topNumberOther = 1;
-            }
-          }
         }
 
       }
@@ -425,72 +436,70 @@ class Piece {
 
       } else if (chessboardLetters.indexOf(letter) > chessboardLetters.indexOf(parentDivIdLetter)) {
 
-        /******************************************
-         * MOVE RIGHT (WHITE) / MOVE LEFT (BLACK) *
-         ******************************************/
+
         if (this.type == "queen" || this.type == "rook") {
-          id = letter + parentDivIdNumber.toString();
 
-          if (document.querySelector("#" + id) !== null) {
+          // Move right
+          id = letter + parentDivIdNumber;
+          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + parentDivIdNumber;
 
-            if (document.querySelector("#" + id).innerHTML == "" && rightLetterOwn == 0 && rightLetterOther == 0) {
-              nextMovesIds.push(id);
-            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-              rightLetterOwn = 1;
+          pieceMoves(id, idnn, this.color, lastIterationLetterOne, right, rightCheckIds, rightMoveOut);
 
-            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && rightLetterOwn == 0 && rightLetterOther == 0) {
-              nextMovesIds.push(id)
-              rightLetterOther = 1;
-            }
-          }
         }
 
         let diagonalNextMoveIdNumberMinus = bottomDiagonalNextMoveIdNumber--;
         let diagonalNextMoveIdNumberPlus = topDiagonalNextMoveIdNumber++;
 
-        /*****************************************************
-         * MOVE RIGHT BOTTOM (WHITE) / MOVE LEFT TOP (BLACK) *
-         *****************************************************/
 
         if (this.type == "queen" || this.type == "bishop") {
-          id = letter + diagonalNextMoveIdNumberMinus.toString();
 
-          if (document.querySelector("#" + id) !== null) {
+          // Move bottom right
+          id = letter + diagonalNextMoveIdNumberMinus;
+          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus + 1);
 
-            if (document.querySelector("#" + id).innerHTML == "" && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
-              nextMovesIds.push(id);
-            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-              rightBottomLetterOwn = 1;
-
-            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && rightBottomLetterOwn == 0 && rightBottomLetterOther == 0) {
-              nextMovesIds.push(id)
-              rightBottomLetterOther = 1;
-            }
-          }
+          pieceMoves(id, idnn, this.color, lastIterationLetterOne, bottomRight, bottomRightCheckIds, bottomRightMoveOut);
 
 
+          // Move top right
+          id = letter + diagonalNextMoveIdNumberPlus;
+          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus - 1);
 
-          /*****************************************************
-           * MOVE RIGHT TOP (WHITE) / MOVE LEFT BOTTOM (BLACK) *
-           *****************************************************/
+          pieceMoves(id, idnn, this.color, lastIterationLetterOne, topRight, topRightCheckIds, topRightMoveOut);
 
-          id = letter + diagonalNextMoveIdNumberPlus.toString();
-
-          if (document.querySelector("#" + id) !== null) {
-
-            if (document.querySelector("#" + id).innerHTML == "" && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
-              nextMovesIds.push(id);
-            } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-              rightTopLetterOwn = 1;
-
-            } else if (!document.querySelector("#" + id).querySelector("." + this.color) && rightTopLetterOwn == 0 && rightTopLetterOther == 0) {
-              nextMovesIds.push(id)
-              rightTopLetterOther = 1;
-            }
-          }
         }
       }
     }
+
+    if (topCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, topCheckIds);
+    }
+    if (topMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, topMoveOut);
+    }
+
+
+    if (rightCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, rightCheckIds);
+    }
+    if (rightMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, rightMoveOut);
+    }
+
+    if (bottomRightCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, bottomRightCheckIds);
+    }
+    if (bottomRightMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, bottomRightMoveOut);
+    }
+
+    if (topRightCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, topRightCheckIds);
+    }
+    if (topRightMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, topRightMoveOut);
+    }
+
+
 
     bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
     topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
@@ -500,30 +509,18 @@ class Piece {
     lettersReversed.forEach(letter => {
 
       if (lettersReversed.indexOf(letter) == (lettersReversed.length - 1)) {
-
         var lastIterationLetter = letter;
-
       }
-      /******************************************
-       * MOVE LEFT (WHITE) / MOVE RIGHT (BLACK) *
-       ******************************************/
+
 
       if (this.type == "queen" || this.type == "rook") {
 
-        id = letter + parentDivIdNumber.toString();
+        // Move left
+        id = id = letter + parentDivIdNumber;
+        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + parentDivIdNumber;
 
-        if (document.querySelector("#" + id) !== null) {
+        pieceMoves(id, idnn, this.color, lastIterationLetter, left, leftCheckIds, leftMoveOut);
 
-          if (document.querySelector("#" + id).innerHTML == "" && leftLetterOwn == 0 && leftLetterOther == 0) {
-            nextMovesIds.push(id);
-          } else if (document.querySelector("#" + id).querySelector("." + this.color)) {
-            leftLetterOwn = 1;
-
-          } else if (!document.querySelector("#" + id).querySelector("." + this.color) && leftLetterOwn == 0 && leftLetterOther == 0) {
-            nextMovesIds.push(id)
-            leftLetterOther = 1;
-          }
-        }
       }
 
 
@@ -533,13 +530,13 @@ class Piece {
 
       if (this.type == "queen" || this.type == "bishop") {
         // Move bottom left
-        id = letter + diagonalNextMoveIdNumberMinus.toString();
+        id = letter + diagonalNextMoveIdNumberMinus;
         idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberMinus + 1);
 
         pieceMoves(id, idnn, this.color, lastIterationLetter, bottomLeft, bottomLeftCheckIds, bottomLeftMoveOut);
 
         // Move top left
-        id = letter + diagonalNextMoveIdNumberPlus.toString();
+        id = letter + diagonalNextMoveIdNumberPlus;
         idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus - 1);
 
         pieceMoves(id, idnn, this.color, lastIterationLetter, topLeft, topLeftCheckIds, topLeftMoveOut);
@@ -547,6 +544,14 @@ class Piece {
       }
 
     })
+
+
+    if (leftCheckIds.length > 0) {
+      Array.prototype.push.apply(checkIds, leftCheckIds);
+    }
+    if (leftMoveOut.length > 0) {
+      Array.prototype.push.apply(moveOut, leftMoveOut);
+    }
 
 
     if (bottomLeftCheckIds.length > 0) {
@@ -591,8 +596,7 @@ class Piece {
       Array.prototype.push.apply(moveOut, bottomMoveOut);
     }
 
-    console.log(idnn)
-    console.log(bottomLeftCheckIds, piece);
+
 
     if (checkIds.length > 0) {
       checkIds.forEach(checkId => {
