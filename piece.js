@@ -207,7 +207,7 @@ class Piece {
 
 
       if (document.querySelector("#" + id) !== null) {
-        document.querySelector("#" + id).classList.add("whitemove");
+        document.querySelector("#" + id).classList.add("whitemove"); // It won't add "whitemove" other way because there won't be a "next-move" div if square is empty
         if (document.querySelector("#" + id).querySelector(".black") || (document.querySelector("#" + RightSquare).querySelector(".black.pep"))) {
           nextMovesIds.push(id);
 
@@ -645,9 +645,19 @@ class Piece {
 
 
       if (nextMoveDiv !== undefined) {
-        let moveButton = document.createElement("div");
-        moveButton.classList.add("next-move");
-        nextMoveDiv.appendChild(moveButton);
+
+        if ((round % 2 == 1 && this.color == "white") || (round % 2 == 0 && this.color == "black")) {
+          let moveButton = document.createElement("div");
+          moveButton.classList.add("next-move");
+          nextMoveDiv.appendChild(moveButton);
+        } else if (round % 2 == 1 && this.color == "black") {
+          nextMoveDiv.classList.add("blackmove");
+
+        } else if (round % 2 == 0 && this.color == "white") {
+          nextMoveDiv.classList.add("whitemove");
+
+        }
+
       }
 
     })

@@ -57,13 +57,13 @@ for (let i = 0; i < 8; i++) {
 let quantity = 1
 let piece;
 
-let whitePawn;
+let whitePawn = new Piece("white", "pawn");
+let blackPawn = new Piece("black", "pawn");
+
 for (let letter of chessboardLetters) {
-    whitePawn = new Piece("white", "pawn");
     whitePawn.initPiece(quantity);
     whitePawn.firstPosition(letter, "2");
 
-    blackPawn = new Piece("black", "pawn");
     blackPawn.initPiece(quantity);
     blackPawn.firstPosition(letter, "7");
 
@@ -73,14 +73,19 @@ for (let letter of chessboardLetters) {
 
 
 
+
 quantity = 1;
 
+let whiteRook = new Piece("white", "rook");
+let blackRook = new Piece("black", "rook");
+
+
 for (let letter of rooksLetters) {
-    whiteRook = new Piece("white", "rook");
+
     whiteRook.initPiece(quantity);
     whiteRook.firstPosition(letter, "1");
 
-    blackRook = new Piece("black", "rook");
+
     blackRook.initPiece(quantity);
     blackRook.firstPosition(letter, "8");
 
@@ -90,12 +95,14 @@ for (let letter of rooksLetters) {
 
 quantity = 1;
 
+let whiteBishop = new Piece("white", "bishop");
+let blackBishop = new Piece("black", "bishop");
+
 for (let letter of bishopsLetters) {
-    whiteBishop = new Piece("white", "bishop");
+
     whiteBishop.initPiece(quantity);
     whiteBishop.firstPosition(letter, "1");
 
-    blackBishop = new Piece("black", "bishop");
     blackBishop.initPiece(quantity);
     blackBishop.firstPosition(letter, "8");
 
@@ -105,12 +112,15 @@ for (let letter of bishopsLetters) {
 
 quantity = 1;
 
+let whiteKnight = new Piece("white", "knight");
+let blackKnight = new Piece("black", "knight");
+
 for (let letter of knightsLetters) {
-    whiteKnight = new Piece("white", "knight");
+
     whiteKnight.initPiece(quantity);
     whiteKnight.firstPosition(letter, "1");
 
-    blackKnight = new Piece("black", "knight");
+
     blackKnight.initPiece(quantity);
     blackKnight.firstPosition(letter, "8");
 
@@ -118,21 +128,21 @@ for (let letter of knightsLetters) {
 
 }
 
-whiteKing = new Piece("white", "king");
+let whiteKing = new Piece("white", "king");
 whiteKing.initPiece();
 whiteKing.firstPosition(chessboardLetters[4], "1");
 
 
-blackKing = new Piece("black", "king");
+let blackKing = new Piece("black", "king");
 blackKing.initPiece();
 blackKing.firstPosition(chessboardLetters[4], "8");
 
 
-whiteQueen = new Piece("white", "queen");
+let whiteQueen = new Piece("white", "queen");
 whiteQueen.initPiece();
 whiteQueen.firstPosition(chessboardLetters[3], "1");
 
-blackQueen = new Piece("black", "queen");
+let blackQueen = new Piece("black", "queen");
 blackQueen.initPiece();
 blackQueen.firstPosition(chessboardLetters[3], "8");
 
@@ -164,28 +174,28 @@ function nextMove(e) {
 
 
                 if (clonedElement.classList.contains("white-pawn")) {
-                    let moveTopLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) + 1);
-                    let pepDivLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
-                    let moveTopRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) + 1);
-                    let pepDivRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
+                    let moveTopLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]) + 1);
+                    let pepDivLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]));
+                    let moveTopRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]) + 1);
+                    let pepDivRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]));
 
-                    if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivLeft && clonedElement.parentElement.className == moveTopLeft) {
+                    if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivLeft && clonedElement.parentElement.id == moveTopLeft) {
                         document.querySelector(".pep").remove();
-                    } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivRight && clonedElement.parentElement.className == moveTopRight) {
+                    } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivRight && clonedElement.parentElement.id == moveTopRight) {
                         document.querySelector(".pep").remove();
                     }
 
                 }
 
                 if (clonedElement.classList.contains("black-pawn")) {
-                    let moveTopLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) - 1);
-                    let pepDivLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
-                    let moveTopRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]) - 1);
-                    let pepDivRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.className)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.className)[1]));
+                    let moveTopLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]) - 1);
+                    let pepDivLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) + 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]));
+                    let moveTopRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]) - 1);
+                    let pepDivRight = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]));
 
-                    if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivLeft && clonedElement.parentElement.className == moveTopLeft) {
+                    if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivLeft && clonedElement.parentElement.id == moveTopLeft) {
                         document.querySelector(".pep").remove();
-                    } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.className == pepDivRight && clonedElement.parentElement.className == moveTopRight) {
+                    } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivRight && clonedElement.parentElement.id == moveTopRight) {
                         document.querySelector(".pep").remove();
                     }
 
@@ -198,7 +208,7 @@ function nextMove(e) {
                 }
 
                 if (clonedElement.classList.contains("white-pawn") || clonedElement.classList.contains("black-pawn")) {
-                    if (!clonedElement.classList.contains("moved") && (nextMove.parentElement.className.includes("4") || nextMove.parentElement.className.includes("5"))) {
+                    if (!clonedElement.classList.contains("moved") && (nextMove.parentElement.id.includes("4") || nextMove.parentElement.id.includes("5"))) {
                         clonedElement.classList.add("pep");
                     }
 
@@ -209,7 +219,7 @@ function nextMove(e) {
 
 
 
-                if (clonedElement.classList.contains("white-pawn") && clonedElement.parentElement.className.includes("8")) {
+                if (clonedElement.classList.contains("white-pawn") && clonedElement.parentElement.id.includes("8")) {
                     let promotion = document.createElement("div");
                     promotion.classList.add("promotion");
                     clonedElement.parentElement.appendChild(promotion);
@@ -237,7 +247,7 @@ function nextMove(e) {
                     clonedElement.remove();
                 }
 
-                if (clonedElement.classList.contains("black-pawn") && clonedElement.parentElement.className.includes("1")) {
+                if (clonedElement.classList.contains("black-pawn") && clonedElement.parentElement.id.includes("1")) {
                     let promotion = document.createElement("div");
                     promotion.classList.add("promotion");
                     clonedElement.parentElement.appendChild(promotion);
@@ -304,13 +314,13 @@ function nextMove(e) {
                 }
             })
 
-            let nextMovements = document.querySelectorAll(".next-move");
-            nextMovements.forEach(nextMove => {
-                if (!nextMove.parentElement.classList.contains("noblackmove")) {
-                    nextMove.parentElement.classList.add("blackmove");
-                }
-                nextMove.remove();
-            })
+            // let nextMovements = document.querySelectorAll(".next-move");
+            // nextMovements.forEach(nextMove => {
+            //     if (!nextMove.parentElement.classList.contains("noblackmove")) {
+            //         nextMove.parentElement.classList.add("blackmove");
+            //     }
+            //     nextMove.remove();
+            // })
 
             let noBlackMove = document.querySelectorAll(".noblackmove");
             noBlackMove.forEach(blackMove => {
@@ -354,9 +364,11 @@ function nextMove(e) {
                     whiteMove.classList.remove("whitemove");
                 })
             }
-        } else {
+        } else if (round % 2 == 0) {
 
             let whitePieces = document.querySelectorAll(".white");
+
+            console.log(whitePieces)
             whitePieces.forEach(whitePiece => {
                 if (whitePiece.classList.contains("white-pawn")) {
                     whitePawn.move(whitePiece);
@@ -373,13 +385,14 @@ function nextMove(e) {
                 }
             })
 
-            let nextMovements = document.querySelectorAll(".next-move");
-            nextMovements.forEach(nextMove => {
-                if (!nextMove.parentElement.classList.contains("nowhitemove")) {
-                    nextMove.parentElement.classList.add("whitemove");
-                }
-                nextMove.remove();
-            })
+            // nowhitemove className is for pawn moves that can't take pieces
+
+            // let nextMovements = document.querySelectorAll(".next-move");
+            // nextMovements.forEach(nextMove => {
+            //     nextMove.parentElement.classList.add("whitemove");
+
+            //     nextMove.remove();
+            // })
 
             let noWhiteMove = document.querySelectorAll(".nowhitemove");
             noWhiteMove.forEach(whiteMove => {
@@ -434,56 +447,56 @@ function nextMove(e) {
 
     } else if (document.querySelector(".promotion")) {
 
-        let promotionSquareClassName = document.querySelector(".promotion").parentElement.className;
+        let promotionSquareId = document.querySelector(".promotion").parentElement.id;
 
         if (e.target.classList.contains("promotion-white-queen")) {
-            whiteQueen = new Piece("white", "queen");
+
             whiteQueen.initPiece();
-            whiteQueen.firstPosition(Array.from(promotionSquareClassName)[0], "8");
+            whiteQueen.firstPosition(Array.from(promotionSquareId)[0], "8");
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-knight")) {
-            whiteKnight = new Piece("white", "knight");
+
             whiteKnight.initPiece();
-            whiteKnight.firstPosition(Array.from(promotionSquareClassName)[0], "8");
+            whiteKnight.firstPosition(Array.from(promotionSquareId)[0], "8");
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-rook")) {
-            whiteRook = new Piece("white", "rook");
+
             whiteRook.initPiece();
-            whiteRook.firstPosition(Array.from(promotionSquareClassName)[0], "8");
+            whiteRook.firstPosition(Array.from(promotionSquareId)[0], "8");
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-bishop")) {
-            whiteBishop = new Piece("white", "bishop");
+
             whiteBishop.initPiece();
-            whiteBishop.firstPosition(Array.from(promotionSquareClassName)[0], "8");
+            whiteBishop.firstPosition(Array.from(promotionSquareId)[0], "8");
             document.querySelector(".promotion").remove();
         }
 
 
         if (e.target.classList.contains("promotion-black-queen")) {
-            blackQueen = new Piece("black", "queen");
+
             blackQueen.initPiece();
-            blackQueen.firstPosition(Array.from(promotionSquareClassName)[0], "1");
+            blackQueen.firstPosition(Array.from(promotionSquareId)[0], "1");
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-knight")) {
-            blackKnight = new Piece("black", "knight");
+
             blackKnight.initPiece();
-            blackKnight.firstPosition(Array.from(promotionSquareClassName)[0], "1");
+            blackKnight.firstPosition(Array.from(promotionSquareId)[0], "1");
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-rook")) {
-            blackRook = new Piece("black", "rook");
+
             blackRook.initPiece();
-            blackRook.firstPosition(Array.from(promotionSquareClassName)[0], "1");
+            blackRook.firstPosition(Array.from(promotionSquareId)[0], "1");
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-bishop")) {
-            blackBishop = new Piece("black", "bishop");
+
             blackBishop.initPiece();
-            blackBishop.firstPosition(Array.from(promotionSquareClassName)[0], "1");
+            blackBishop.firstPosition(Array.from(promotionSquareId)[0], "1");
             document.querySelector(".promotion").remove();
         }
 
