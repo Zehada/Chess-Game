@@ -650,10 +650,18 @@ class Piece {
           moveButton.classList.add("next-move");
           nextMoveDiv.appendChild(moveButton);
         } else if (round % 2 == 1 && this.color == "black") {
-          nextMoveDiv.classList.add("blackmove");
+          if (!nextMoveDiv.classList.contains("noblackmove")) {
+            nextMoveDiv.classList.add("blackmove");
+          } else if (nextMoveDiv.classList.contains("noblackmove")) {
+            nextMoveDiv.classList.remove("noblackmove");
+          }
 
         } else if (round % 2 == 0 && this.color == "white") {
-          nextMoveDiv.classList.add("whitemove");
+          if (!nextMoveDiv.classList.contains("nowhitemove")) {
+            nextMoveDiv.classList.add("whitemove");
+          } else if (nextMoveDiv.classList.contains("nowhitemove")) {
+            nextMoveDiv.classList.remove("nowhitemove");
+          }
 
         }
 
