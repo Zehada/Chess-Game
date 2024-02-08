@@ -409,7 +409,7 @@ class Piece {
 
       if (chessboardLetters.indexOf(letter) == (chessboardLetters.length - 1)) {
         var lastIterationLetterOne = letter;
-        var lastIterationNumberOne = chessboardLetters.indexOf(letter);
+        var lastIterationNumberOne = chessboardLetters.indexOf(letter) + 1;
       }
 
       let nextMoveIdNumber = chessboardLetters.indexOf(letter) + 1
@@ -636,7 +636,6 @@ class Piece {
         } else if (piece.parentElement.classList.contains("moveoutwhite") && document.querySelector("#" + move).classList.contains("moveoutwhite")) {
           var nextMoveDiv = document.querySelector("#" + move);
         }
-
         if (this.type == "king") {
           var nextMoveDiv = document.querySelector("#" + move);
         }

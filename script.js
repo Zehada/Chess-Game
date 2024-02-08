@@ -368,7 +368,6 @@ function nextMove(e) {
 
             let whitePieces = document.querySelectorAll(".white");
 
-            console.log(whitePieces)
             whitePieces.forEach(whitePiece => {
                 if (whitePiece.classList.contains("white-pawn")) {
                     whitePawn.move(whitePiece);
