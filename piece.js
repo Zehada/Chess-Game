@@ -158,8 +158,16 @@ class Piece {
           if (!document.querySelector("#" + id).querySelector("." + this.color)) {
             if (this.color == "black" && !document.querySelector("#" + id).classList.contains("whitemove")) {
               nextMovesIds.push(id);
+
             } else if (this.color == "white" && !document.querySelector("#" + id).classList.contains("blackmove")) {
               nextMovesIds.push(id);
+
+              if (!document.querySelector(".white-king").classList.contains("moved") && document.querySelector("#b1").innerHTML == "" && document.querySelector("#c1").innerHTML == "" && document.querySelector("#d1").innerHTML == "" && !document.querySelector("#d1").classList.contains("blackmove") && document.querySelector("#a1").querySelector(".white-rook:not(.moved)")) {
+                nextMovesIds.push("c1");
+
+              } else if (!document.querySelector(".white-king").classList.contains("moved") && document.querySelector("#f1").innerHTML == "" && !document.querySelector("#f1").classList.contains("blackmove") && document.querySelector("#g1").innerHTML == "" && document.querySelector("#h1").querySelector(".white-rook:not(.moved)")) {
+                nextMovesIds.push("g1");
+              }
             }
           }
         }
@@ -368,6 +376,7 @@ class Piece {
           if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
 
             positionCheckIds.push(parentDivId);
+            positionCheckIds.push(id); // Add the king's div to {color}check list for castling
             positionMoveOut.length = 0;
           } else {
             positionCheckIds.length = 0;
@@ -395,11 +404,14 @@ class Piece {
 
 
 
-      } else if (document.querySelector("#" + id) == null && elements.own == 0 && elements.other == 0) {
-        if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "") {
+      } else if (document.querySelector("#" + id) == null) {
+        if (document.querySelector("#" + idnn) !== null) {
+          console.log(idnn, piece)
+        }
+        if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "" && elements.own == 0 && elements.other == 0) {
           positionCheckIds.length = 0;
           positionMoveOut.length = 0;
-        } else if (document.querySelector("#" + idnn) !== null && !document.querySelector("#" + idnn).querySelector("." + color)) {
+        } else if (document.querySelector("#" + idnn) !== null && !document.querySelector("#" + idnn).querySelector("." + color) && elements.own == 0 && elements.other == 0) {
           positionMoveOut.length = 0;
         }
       }
@@ -411,6 +423,7 @@ class Piece {
         var lastIterationLetterOne = letter;
         var lastIterationNumberOne = chessboardLetters.indexOf(letter) + 1;
       }
+
 
       let nextMoveIdNumber = chessboardLetters.indexOf(letter) + 1
 
@@ -455,7 +468,8 @@ class Piece {
 
           // Move bottom right
           id = letter + diagonalNextMoveIdNumberMinus;
-          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus + 1);
+          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + (diagonalNextMoveIdNumberMinus + 1);
+
 
           pieceMoves(id, idnn, this.color, lastIterationLetterOne, bottomRight, bottomRightCheckIds, bottomRightMoveOut);
 
@@ -532,6 +546,7 @@ class Piece {
         // Move bottom left
         id = letter + diagonalNextMoveIdNumberMinus;
         idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberMinus + 1);
+        console.log(id)
 
         pieceMoves(id, idnn, this.color, lastIterationLetter, bottomLeft, bottomLeftCheckIds, bottomLeftMoveOut);
 

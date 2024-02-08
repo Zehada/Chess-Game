@@ -217,6 +217,13 @@ function nextMove(e) {
 
                 }
 
+                if (clonedElement.classList.contains("white-king") || clonedElement.classList.contains("black-king") || clonedElement.classList.contains("white-rook") || clonedElement.classList.contains("black-rook")) {
+
+                    clonedElement.classList.add("moved");
+
+
+                }
+
 
 
                 if (clonedElement.classList.contains("white-pawn") && clonedElement.parentElement.id.includes("8")) {
@@ -314,14 +321,6 @@ function nextMove(e) {
                 }
             })
 
-            // let nextMovements = document.querySelectorAll(".next-move");
-            // nextMovements.forEach(nextMove => {
-            //     if (!nextMove.parentElement.classList.contains("noblackmove")) {
-            //         nextMove.parentElement.classList.add("blackmove");
-            //     }
-            //     nextMove.remove();
-            // })
-
             let noBlackMove = document.querySelectorAll(".noblackmove");
             noBlackMove.forEach(blackMove => {
                 blackMove.classList.remove("noblackmove");
@@ -364,6 +363,7 @@ function nextMove(e) {
                     whiteMove.classList.remove("whitemove");
                 })
             }
+
         } else if (round % 2 == 0) {
 
             let whitePieces = document.querySelectorAll(".white");
@@ -386,12 +386,6 @@ function nextMove(e) {
 
             // nowhitemove className is for pawn moves that can't take pieces
 
-            // let nextMovements = document.querySelectorAll(".next-move");
-            // nextMovements.forEach(nextMove => {
-            //     nextMove.parentElement.classList.add("whitemove");
-
-            //     nextMove.remove();
-            // })
 
             let noWhiteMove = document.querySelectorAll(".nowhitemove");
             noWhiteMove.forEach(whiteMove => {
