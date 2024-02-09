@@ -89,7 +89,8 @@ class Piece {
     let topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
     let lettersReversed = [];
     let numbersReversed = [];
-
+    let lettersInOrder = [];
+    let numbersInOrder = [];
 
     let top = {
       own: 0,
@@ -133,7 +134,6 @@ class Piece {
     }
 
     let id;
-    let idnn;
     let firstSquare;
 
     let idList = [];
@@ -340,20 +340,29 @@ class Piece {
     }
 
 
+    if (this.type == "queen" || this.type == "bishop" || this.type == "rook") {
 
-    function pieceMoves(id, idnn, color, lastIteration, elements, positionCheckIds, positionMoveOut) {
-      // idnn = id non null
+      let topLastIteration;
+      let rightLastIteration;
+      let bottomRightLastIteration;
+      let bottomRightIds = [];
+      let topRightLastIteration;
+      let topRightIds = [];
+      let leftLastIteration;
+      let bottomLeftIds = [];
+      let bottomLeftLastIteration;
+      let topLeftIds = [];
+      let topLeftLastIteration;
+      let bottomlastIteration;
 
-      if (document.querySelector("#" + id) !== null) {
-
+      function pieceMoves(id, color, lastIteration, elements, positionCheckIds, positionMoveOut) {
 
         if (document.querySelector("#" + id).innerHTML == "" && elements.own == 0 && elements.other == 0) {
           nextMovesIds.push(id);
           positionCheckIds.push(id);
           positionMoveOut.push(id);
 
-          if (document.querySelector("#" + id).id.includes(lastIteration)) {
-
+          if (document.querySelector("#" + id).id == lastIteration) {
             positionCheckIds.length = 0;
             positionMoveOut.length = 0;
           }
@@ -368,7 +377,7 @@ class Piece {
           elements.other = 1;
           positionMoveOut.push(id);
 
-          if (document.querySelector("#" + id).id.includes(lastIteration)) {
+          if (document.querySelector("#" + id).id == lastIteration) {
             positionMoveOut.length = 0;
           }
 
@@ -380,6 +389,7 @@ class Piece {
             positionMoveOut.length = 0;
           } else {
             positionCheckIds.length = 0;
+
           }
 
         } else if (document.querySelector("#" + id).innerHTML == "" && elements.own == 0 && elements.other == 1) {
@@ -401,64 +411,102 @@ class Piece {
           }
 
         }
-
-
-
-      } else if (document.querySelector("#" + id) == null) {
-        if (document.querySelector("#" + idnn) !== null) {
-          console.log(idnn, piece)
-        }
-        if (document.querySelector("#" + idnn) !== null && document.querySelector("#" + idnn).innerHTML == "" && elements.own == 0 && elements.other == 0) {
-          positionCheckIds.length = 0;
-          positionMoveOut.length = 0;
-        } else if (document.querySelector("#" + idnn) !== null && !document.querySelector("#" + idnn).querySelector("." + color) && elements.own == 0 && elements.other == 0) {
-          positionMoveOut.length = 0;
-        }
-      }
-    }
-
-    for (let letter of chessboardLetters) {
-
-      if (chessboardLetters.indexOf(letter) == (chessboardLetters.length - 1)) {
-        var lastIterationLetterOne = letter;
-        var lastIterationNumberOne = chessboardLetters.indexOf(letter) + 1;
       }
 
+      for (let letter of chessboardLetters) {
 
-      let nextMoveIdNumber = chessboardLetters.indexOf(letter) + 1
+        let nextMoveIdNumber = chessboardLetters.indexOf(letter) + 1
 
-      if (nextMoveIdNumber < parentDivIdNumber) {
-        numbersReversed.unshift(nextMoveIdNumber);
+        if (nextMoveIdNumber < parentDivIdNumber) {
+          numbersReversed.unshift(nextMoveIdNumber);
 
-      } else if (nextMoveIdNumber > parentDivIdNumber) {
+
+
+        } else if (nextMoveIdNumber > parentDivIdNumber) {
+          numbersInOrder.push(nextMoveIdNumber);
+
+          if (this.type == "queen" || this.type == "rook") {
+
+            if (chessboardLetters.indexOf(letter) == (chessboardLetters.length - 1)) {
+              topLastIteration = parentDivIdLetter + nextMoveIdNumber;
+            }
+
+            // Move top
+            id = parentDivIdLetter + nextMoveIdNumber;
+            pieceMoves(id, this.color, topLastIteration, top, topCheckIds, topMoveOut);
+
+          }
+
+        }
+
+        if (chessboardLetters.indexOf(letter) < chessboardLetters.indexOf(parentDivIdLetter)) {
+          lettersReversed.unshift(letter);
+
+        } else if (chessboardLetters.indexOf(letter) > chessboardLetters.indexOf(parentDivIdLetter)) {
+          lettersInOrder.push(letter);
+
+
+          if (this.type == "queen" || this.type == "rook") {
+            if (chessboardLetters.indexOf(letter) == (chessboardLetters.length - 1)) {
+              rightLastIteration = letter + parentDivIdNumber;
+            }
+
+            // Move right
+            id = letter + parentDivIdNumber;
+            pieceMoves(id, this.color, rightLastIteration, right, rightCheckIds, rightMoveOut);
+
+          }
+        }
+      }
+
+      if (this.type == "queen" || this.type == "bishop") {
+        lettersInOrder.forEach(letter => {
+
+          let diagonalNextMoveIdNumberMinus = bottomDiagonalNextMoveIdNumber--;
+          let diagonalNextMoveIdNumberPlus = topDiagonalNextMoveIdNumber++;
+
+          // Move bottom right
+          if (numbersReversed.includes(diagonalNextMoveIdNumberMinus)) {
+
+            id = letter + diagonalNextMoveIdNumberMinus;
+            bottomRightIds.push(id);
+
+          }
+
+          // Move top right
+          if (numbersInOrder.includes(diagonalNextMoveIdNumberPlus)) {
+
+            id = letter + diagonalNextMoveIdNumberPlus;
+            topRightIds.push(id);
+
+
+          }
+
+        })
+
+
+      }
+
+
+      bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
+      topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
+
+
+
+      lettersReversed.forEach(letter => {
 
         if (this.type == "queen" || this.type == "rook") {
 
-          // Move top
-          id = parentDivIdLetter + nextMoveIdNumber;
-          idnn = parentDivIdLetter + (nextMoveIdNumber - 1);
+          if (lettersReversed.indexOf(letter) == (lettersReversed.length - 1)) {
+            leftLastIteration = letter + parentDivIdNumber;
+          }
 
-          pieceMoves(id, idnn, this.color, lastIterationNumberOne, top, topCheckIds, topMoveOut);
-
-        }
-
-      }
-
-      if (chessboardLetters.indexOf(letter) < chessboardLetters.indexOf(parentDivIdLetter)) {
-        lettersReversed.unshift(letter);
-
-      } else if (chessboardLetters.indexOf(letter) > chessboardLetters.indexOf(parentDivIdLetter)) {
-
-
-        if (this.type == "queen" || this.type == "rook") {
-
-          // Move right
-          id = letter + parentDivIdNumber;
-          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + parentDivIdNumber;
-
-          pieceMoves(id, idnn, this.color, lastIterationLetterOne, right, rightCheckIds, rightMoveOut);
+          // Move left
+          id = id = letter + parentDivIdNumber;
+          pieceMoves(id, this.color, leftLastIteration, left, leftCheckIds, leftMoveOut);
 
         }
+
 
         let diagonalNextMoveIdNumberMinus = bottomDiagonalNextMoveIdNumber--;
         let diagonalNextMoveIdNumberPlus = topDiagonalNextMoveIdNumber++;
@@ -466,152 +514,142 @@ class Piece {
 
         if (this.type == "queen" || this.type == "bishop") {
 
-          // Move bottom right
-          id = letter + diagonalNextMoveIdNumberMinus;
-          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + (diagonalNextMoveIdNumberMinus + 1);
+          // Move bottom left
+          if (numbersReversed.includes(diagonalNextMoveIdNumberMinus)) {
+            id = letter + diagonalNextMoveIdNumberMinus;
+            bottomLeftIds.push(id);
 
+          }
 
-          pieceMoves(id, idnn, this.color, lastIterationLetterOne, bottomRight, bottomRightCheckIds, bottomRightMoveOut);
+          if (numbersInOrder.includes(diagonalNextMoveIdNumberPlus)) {
+            // Move top left
+            id = letter + diagonalNextMoveIdNumberPlus;
+            topLeftIds.push(id);
 
-
-          // Move top right
-          id = letter + diagonalNextMoveIdNumberPlus;
-          idnn = chessboardLetters[chessboardLetters.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus - 1);
-
-          pieceMoves(id, idnn, this.color, lastIterationLetterOne, topRight, topRightCheckIds, topRightMoveOut);
-
+          }
         }
-      }
-    }
-
-    if (topCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, topCheckIds);
-    }
-    if (topMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, topMoveOut);
-    }
-
-
-    if (rightCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, rightCheckIds);
-    }
-    if (rightMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, rightMoveOut);
-    }
-
-    if (bottomRightCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, bottomRightCheckIds);
-    }
-    if (bottomRightMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, bottomRightMoveOut);
-    }
-
-    if (topRightCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, topRightCheckIds);
-    }
-    if (topRightMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, topRightMoveOut);
-    }
-
-
-
-    bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
-    topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
-
-
-
-    lettersReversed.forEach(letter => {
-
-      if (lettersReversed.indexOf(letter) == (lettersReversed.length - 1)) {
-        var lastIterationLetter = letter;
-      }
-
-
-      if (this.type == "queen" || this.type == "rook") {
-
-        // Move left
-        id = id = letter + parentDivIdNumber;
-        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + parentDivIdNumber;
-
-        pieceMoves(id, idnn, this.color, lastIterationLetter, left, leftCheckIds, leftMoveOut);
-
-      }
-
-
-      let diagonalNextMoveIdNumberMinus = bottomDiagonalNextMoveIdNumber--;
-      let diagonalNextMoveIdNumberPlus = topDiagonalNextMoveIdNumber++;
+      })
 
 
       if (this.type == "queen" || this.type == "bishop") {
-        // Move bottom left
-        id = letter + diagonalNextMoveIdNumberMinus;
-        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberMinus + 1);
-        console.log(id)
+        bottomLeftIds.forEach(id => {
 
-        pieceMoves(id, idnn, this.color, lastIterationLetter, bottomLeft, bottomLeftCheckIds, bottomLeftMoveOut);
+          if (bottomLeftIds.indexOf(id) == (bottomLeftIds.length - 1)) {
+            bottomLeftLastIteration = id;
+          }
 
-        // Move top left
-        id = letter + diagonalNextMoveIdNumberPlus;
-        idnn = lettersReversed[lettersReversed.indexOf(letter) - 1] + (diagonalNextMoveIdNumberPlus - 1);
+          pieceMoves(id, this.color, bottomLeftLastIteration, bottomLeft, bottomLeftCheckIds, bottomLeftMoveOut);
 
-        pieceMoves(id, idnn, this.color, lastIterationLetter, topLeft, topLeftCheckIds, topLeftMoveOut);
+        })
 
-      }
+        topLeftIds.forEach(id => {
 
-    })
+          if (topLeftIds.indexOf(id) == (topLeftIds.length - 1)) {
+            topLeftLastIteration = id;
+          }
 
+          pieceMoves(id, this.color, topLeftLastIteration, topLeft, topLeftCheckIds, topLeftMoveOut);
 
-    if (leftCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, leftCheckIds);
-    }
-    if (leftMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, leftMoveOut);
-    }
+        })
 
+        bottomRightIds.forEach(id => {
 
-    if (bottomLeftCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, bottomLeftCheckIds);
-    }
-    if (bottomLeftMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, bottomLeftMoveOut);
-    }
+          if (bottomRightIds.indexOf(id) == (bottomRightIds.length - 1)) {
+            bottomRightLastIteration = id;
+          }
 
+          pieceMoves(id, this.color, bottomRightLastIteration, bottomRight, bottomRightCheckIds, bottomRightMoveOut);
 
-    if (topLeftCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, topLeftCheckIds);
-    }
-    if (topLeftMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, topLeftMoveOut);
-    }
+        })
 
+        topRightIds.forEach(id => {
 
-    numbersReversed.forEach(number => {
+          if (topRightIds.indexOf(id) == (topRightIds.length - 1)) {
+            topRightLastIteration = id;
+          }
 
-      if (numbersReversed.indexOf(number) == (numbersReversed.length - 1)) {
-        var lastIterationNumber = number;
+          pieceMoves(id, this.color, topRightLastIteration, topRight, topRightCheckIds, topRightMoveOut);
+
+        })
       }
 
       if (this.type == "queen" || this.type == "rook") {
 
-        // Move bottom
-        id = parentDivIdLetter + number;
-        idnn = parentDivIdLetter + (numbersReversed[numbersReversed.indexOf(number) - 1]);
+        numbersReversed.forEach(number => {
 
-        pieceMoves(id, idnn, this.color, lastIterationNumber, bottom, bottomCheckIds, bottomMoveOut);
+          if (numbersReversed.indexOf(number) == (numbersReversed.length - 1)) {
+            bottomlastIteration = parentDivIdLetter + number;
+          }
 
+          // Move bottom
+          id = parentDivIdLetter + number;
+          pieceMoves(id, this.color, bottomlastIteration, bottom, bottomCheckIds, bottomMoveOut);
+
+        })
       }
 
-    })
+      if (topCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, topCheckIds);
+      }
+      if (topMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, topMoveOut);
+      }
 
-    if (bottomCheckIds.length > 0) {
-      Array.prototype.push.apply(checkIds, bottomCheckIds);
+
+      if (rightCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, rightCheckIds);
+      }
+      if (rightMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, rightMoveOut);
+      }
+
+
+      if (leftCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, leftCheckIds);
+      }
+      if (leftMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, leftMoveOut);
+      }
+
+
+      if (bottomLeftCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, bottomLeftCheckIds);
+      }
+      if (bottomLeftMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, bottomLeftMoveOut);
+      }
+
+      if (topLeftCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, topLeftCheckIds);
+      }
+      if (topLeftMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, topLeftMoveOut);
+      }
+
+
+      if (bottomRightCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, bottomRightCheckIds);
+      }
+      if (bottomRightMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, bottomRightMoveOut);
+      }
+
+      if (topRightCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, topRightCheckIds);
+      }
+      if (topRightMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, topRightMoveOut);
+      }
+
+
+      if (bottomCheckIds.length > 0) {
+        Array.prototype.push.apply(checkIds, bottomCheckIds);
+      }
+
+      if (bottomMoveOut.length > 0) {
+        Array.prototype.push.apply(moveOut, bottomMoveOut);
+      }
     }
-
-    if (bottomMoveOut.length > 0) {
-      Array.prototype.push.apply(moveOut, bottomMoveOut);
-    }
-
-
 
     if (checkIds.length > 0) {
       checkIds.forEach(checkId => {
