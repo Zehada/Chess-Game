@@ -59,79 +59,7 @@ class Piece {
     let checkIds = [];
     let moveOut = [];
 
-    let topCheckIds = [];
-    let topMoveOut = [];
-
-    let rightCheckIds = [];
-    let rightMoveOut = [];
-
-    let bottomRightCheckIds = [];
-    let bottomRightMoveOut = [];
-
-    let topRightCheckIds = [];
-    let topRightMoveOut = [];
-
-    let leftCheckIds = [];
-    let leftMoveOut = [];
-
-    let topLeftCheckIds = [];
-    let topLeftMoveOut = [];
-
-    let bottomLeftCheckIds = [];
-    let bottomLeftMoveOut = [];
-
-    let bottomCheckIds = [];
-    let bottomMoveOut = [];
-
     let indexOfParentDivIdLetter = chessboardLetters.indexOf(parentDivIdLetter);
-
-    let bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
-    let topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
-    let lettersReversed = [];
-    let numbersReversed = [];
-    let lettersInOrder = [];
-    let numbersInOrder = [];
-
-    let top = {
-      own: 0,
-      other: 0
-    }
-
-    let right = {
-      own: 0,
-      other: 0
-    }
-
-    let bottomRight = {
-      own: 0,
-      other: 0
-    }
-
-    let topRight = {
-      own: 0,
-      other: 0
-    }
-
-    let left = {
-      own: 0,
-      other: 0
-    }
-
-
-    let topLeft = {
-      own: 0,
-      other: 0
-    }
-
-    let bottomLeft = {
-      own: 0,
-      other: 0
-    }
-
-    let bottom = {
-      own: 0,
-      other: 0
-    }
 
     let id;
     let firstSquare;
@@ -159,13 +87,22 @@ class Piece {
             if (this.color == "black" && !document.querySelector("#" + id).classList.contains("whitemove")) {
               nextMovesIds.push(id);
 
+              if (!document.querySelector(".black-king").classList.contains("moved") && !document.querySelector(".black-king").parentElement.classList.contains("whitemove") && document.querySelector("#b8").innerHTML == "" && document.querySelector("#c8").innerHTML == "" && document.querySelector("#d8").innerHTML == "" && !document.querySelector("#d8").classList.contains("whitemove") && document.querySelector("#a8").querySelector(".black-rook:not(.moved)")) {
+                nextMovesIds.push("c8");
+
+              } else if (!document.querySelector(".black-king").classList.contains("moved") && !document.querySelector(".black-king").parentElement.classList.contains("whitemove") && document.querySelector("#f8").innerHTML == "" && !document.querySelector("#f8").classList.contains("whitemove") && document.querySelector("#g8").innerHTML == "" && document.querySelector("#h8").querySelector(".black-rook:not(.moved)")) {
+                nextMovesIds.push("g8");
+              }
+
+
+
             } else if (this.color == "white" && !document.querySelector("#" + id).classList.contains("blackmove")) {
               nextMovesIds.push(id);
 
-              if (!document.querySelector(".white-king").classList.contains("moved") && document.querySelector("#b1").innerHTML == "" && document.querySelector("#c1").innerHTML == "" && document.querySelector("#d1").innerHTML == "" && !document.querySelector("#d1").classList.contains("blackmove") && document.querySelector("#a1").querySelector(".white-rook:not(.moved)")) {
+              if (!document.querySelector(".white-king").classList.contains("moved") && !document.querySelector(".white-king").parentElement.classList.contains("blackmove") && document.querySelector("#b1").innerHTML == "" && document.querySelector("#c1").innerHTML == "" && document.querySelector("#d1").innerHTML == "" && !document.querySelector("#d1").classList.contains("blackmove") && document.querySelector("#a1").querySelector(".white-rook:not(.moved)")) {
                 nextMovesIds.push("c1");
 
-              } else if (!document.querySelector(".white-king").classList.contains("moved") && document.querySelector("#f1").innerHTML == "" && !document.querySelector("#f1").classList.contains("blackmove") && document.querySelector("#g1").innerHTML == "" && document.querySelector("#h1").querySelector(".white-rook:not(.moved)")) {
+              } else if (!document.querySelector(".white-king").classList.contains("moved") && !document.querySelector(".white-king").parentElement.classList.contains("blackmove") && document.querySelector("#f1").innerHTML == "" && !document.querySelector("#f1").classList.contains("blackmove") && document.querySelector("#g1").innerHTML == "" && document.querySelector("#h1").querySelector(".white-rook:not(.moved)")) {
                 nextMovesIds.push("g1");
               }
             }
@@ -342,6 +279,70 @@ class Piece {
 
     if (this.type == "queen" || this.type == "bishop" || this.type == "rook") {
 
+      let topCheckIds = [];
+      let topMoveOut = [];
+
+      let rightCheckIds = [];
+      let rightMoveOut = [];
+
+      let bottomRightCheckIds = [];
+      let bottomRightMoveOut = [];
+
+      let topRightCheckIds = [];
+      let topRightMoveOut = [];
+
+      let leftCheckIds = [];
+      let leftMoveOut = [];
+
+      let topLeftCheckIds = [];
+      let topLeftMoveOut = [];
+
+      let bottomLeftCheckIds = [];
+      let bottomLeftMoveOut = [];
+
+      let bottomCheckIds = [];
+      let bottomMoveOut = [];
+
+      let bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
+      let topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
+      let lettersReversed = [];
+      let numbersReversed = [];
+      let lettersInOrder = [];
+      let numbersInOrder = [];
+
+      let top = {
+        own: 0,
+        other: 0
+      }
+      let right = {
+        own: 0,
+        other: 0
+      }
+      let bottomRight = {
+        own: 0,
+        other: 0
+      }
+      let topRight = {
+        own: 0,
+        other: 0
+      }
+      let left = {
+        own: 0,
+        other: 0
+      }
+      let topLeft = {
+        own: 0,
+        other: 0
+      }
+      let bottomLeft = {
+        own: 0,
+        other: 0
+      }
+      let bottom = {
+        own: 0,
+        other: 0
+      }
+
       let topLastIteration;
       let rightLastIteration;
       let bottomRightLastIteration;
@@ -385,7 +386,7 @@ class Piece {
           if (document.querySelector("#" + id).querySelector(".black-king") || document.querySelector("#" + id).querySelector(".white-king")) {
 
             positionCheckIds.push(parentDivId);
-            positionCheckIds.push(id); // Add the king's div to {color}check list for castling
+            // positionCheckIds.push(id); // Add the king's div to {color}check list for castling
             positionMoveOut.length = 0;
           } else {
             positionCheckIds.length = 0;
@@ -393,7 +394,7 @@ class Piece {
           }
 
         } else if (document.querySelector("#" + id).innerHTML == "" && elements.own == 0 && elements.other == 1) {
-          if (document.querySelector("#" + id).id.includes(lastIteration)) {
+          if (document.querySelector("#" + id).id == lastIteration) {
             positionMoveOut.length = 0;
           } else {
             positionMoveOut.push(id);
@@ -481,16 +482,11 @@ class Piece {
 
 
           }
-
         })
-
-
       }
-
 
       bottomDiagonalNextMoveIdNumber = parentDivIdNumber - 1;
       topDiagonalNextMoveIdNumber = parentDivIdNumber + 1;
-
 
 
       lettersReversed.forEach(letter => {
@@ -705,15 +701,17 @@ class Piece {
         } else if (round % 2 == 1 && this.color == "black") {
           if (!nextMoveDiv.classList.contains("noblackmove")) {
             nextMoveDiv.classList.add("blackmove");
-          } else if (nextMoveDiv.classList.contains("noblackmove")) {
+          } else if (nextMoveDiv.classList.contains("noblackmove") && this.type !== "pawn") {
             nextMoveDiv.classList.remove("noblackmove");
+            nextMoveDiv.classList.add("blackmove");
           }
 
         } else if (round % 2 == 0 && this.color == "white") {
           if (!nextMoveDiv.classList.contains("nowhitemove")) {
             nextMoveDiv.classList.add("whitemove");
-          } else if (nextMoveDiv.classList.contains("nowhitemove")) {
+          } else if (nextMoveDiv.classList.contains("nowhitemove") && this.type !== "pawn") {
             nextMoveDiv.classList.remove("nowhitemove");
+            nextMoveDiv.classList.add("whitemove");
           }
 
         }

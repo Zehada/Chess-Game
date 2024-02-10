@@ -171,7 +171,33 @@ function nextMove(e) {
                 }
                 nextMove.parentElement.appendChild(clonedElement);
 
+                if (clonedElement.classList.contains("white-king") && nextMove.parentElement.id == "c1") {
+                    let castlingRook = document.querySelector("#a1").querySelector(".white-rook");
+                    let clonedRook = castlingRook.cloneNode();
+                    document.querySelector("#d1").appendChild(clonedRook);
+                    clonedRook.classList.add("moved");
+                    castlingRook.remove();
+                } else if (clonedElement.classList.contains("white-king") && nextMove.parentElement.id == "g1") {
+                    let castlingRook = document.querySelector("#h1").querySelector(".white-rook");
+                    let clonedRook = castlingRook.cloneNode();
+                    document.querySelector("#f1").appendChild(clonedRook);
+                    clonedRook.classList.add("moved");
+                    castlingRook.remove();
+                }
 
+                if (clonedElement.classList.contains("black-king") && nextMove.parentElement.id == "c8") {
+                    let castlingRook = document.querySelector("#a8").querySelector(".black-rook");
+                    let clonedRook = castlingRook.cloneNode();
+                    document.querySelector("#d8").appendChild(clonedRook);
+                    clonedRook.classList.add("moved");
+                    castlingRook.remove();
+                } else if (clonedElement.classList.contains("black-king") && nextMove.parentElement.id == "g8") {
+                    let castlingRook = document.querySelector("#h8").querySelector(".black-rook");
+                    let clonedRook = castlingRook.cloneNode();
+                    document.querySelector("#f8").appendChild(clonedRook);
+                    clonedRook.classList.add("moved");
+                    castlingRook.remove();
+                }
 
                 if (clonedElement.classList.contains("white-pawn")) {
                     let moveTopLeft = chessboardLetters[chessboardLetters.indexOf(Array.from(selectedElement.parentElement.id)[0]) - 1] + (parseInt(Array.from(selectedElement.parentElement.id)[1]) + 1);
@@ -446,24 +472,28 @@ function nextMove(e) {
 
             whiteQueen.initPiece();
             whiteQueen.firstPosition(Array.from(promotionSquareId)[0], "8");
+            whiteQueen.move(document.querySelector("#" + promotionSquareId).querySelector(".white-queen"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-knight")) {
 
             whiteKnight.initPiece();
             whiteKnight.firstPosition(Array.from(promotionSquareId)[0], "8");
+            whiteKnight.move(document.querySelector("#" + promotionSquareId).querySelector(".white-knight"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-rook")) {
 
             whiteRook.initPiece();
             whiteRook.firstPosition(Array.from(promotionSquareId)[0], "8");
+            whiteRook.move(document.querySelector("#" + promotionSquareId).querySelector(".white-rook"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-bishop")) {
 
             whiteBishop.initPiece();
             whiteBishop.firstPosition(Array.from(promotionSquareId)[0], "8");
+            whiteBishop.move(document.querySelector("#" + promotionSquareId).querySelector(".white-bishop"));
             document.querySelector(".promotion").remove();
         }
 
@@ -472,24 +502,28 @@ function nextMove(e) {
 
             blackQueen.initPiece();
             blackQueen.firstPosition(Array.from(promotionSquareId)[0], "1");
+            blackQueen.move(document.querySelector("#" + promotionSquareId).querySelector(".black-queen"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-knight")) {
 
             blackKnight.initPiece();
             blackKnight.firstPosition(Array.from(promotionSquareId)[0], "1");
+            blackKnight.move(document.querySelector("#" + promotionSquareId).querySelector(".black-knight"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-rook")) {
 
             blackRook.initPiece();
             blackRook.firstPosition(Array.from(promotionSquareId)[0], "1");
+            blackRook.move(document.querySelector("#" + promotionSquareId).querySelector(".black-rook"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-bishop")) {
 
             blackBishop.initPiece();
             blackBishop.firstPosition(Array.from(promotionSquareId)[0], "1");
+            blackBishop.move(document.querySelector("#" + promotionSquareId).querySelector(".black-bishop"));
             document.querySelector(".promotion").remove();
         }
 
