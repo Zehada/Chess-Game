@@ -8,6 +8,13 @@ const knightsLetters = ["b", "g"];
 
 let chessboardNumber = 8;
 
+var audioMove = new Audio('sounds/move.mp3');
+
+
+
+var audioTake = new Audio('sounds/take.mp3');
+
+
 
 
 // Creates chessboard
@@ -168,35 +175,44 @@ function nextMove(e) {
                 clonedElement.classList.remove("selected");
                 if (nextMove.parentElement.querySelector("img")) {
                     nextMove.parentElement.querySelector("img").remove();
+                    if (!clonedElement.classList.contains("white-pawn") && !clonedElement.classList.contains("black-pawn")) {
+                        audioTake.play();
+                    }
+                } else if (!clonedElement.classList.contains("white-pawn") && !clonedElement.classList.contains("black-pawn")) {
+                    audioMove.play();
                 }
                 nextMove.parentElement.appendChild(clonedElement);
 
-                if (clonedElement.classList.contains("white-king") && nextMove.parentElement.id == "c1") {
+                if (clonedElement.classList.contains("white-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "c1") {
                     let castlingRook = document.querySelector("#a1").querySelector(".white-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#d1").appendChild(clonedRook);
                     clonedRook.classList.add("moved");
                     castlingRook.remove();
-                } else if (clonedElement.classList.contains("white-king") && nextMove.parentElement.id == "g1") {
+                    audioTake.play();
+                } else if (clonedElement.classList.contains("white-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "g1") {
                     let castlingRook = document.querySelector("#h1").querySelector(".white-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#f1").appendChild(clonedRook);
                     clonedRook.classList.add("moved");
                     castlingRook.remove();
+                    audioTake.play();
                 }
 
-                if (clonedElement.classList.contains("black-king") && nextMove.parentElement.id == "c8") {
+                if (clonedElement.classList.contains("black-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "c8") {
                     let castlingRook = document.querySelector("#a8").querySelector(".black-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#d8").appendChild(clonedRook);
                     clonedRook.classList.add("moved");
                     castlingRook.remove();
-                } else if (clonedElement.classList.contains("black-king") && nextMove.parentElement.id == "g8") {
+                    audioTake.play();
+                } else if (clonedElement.classList.contains("black-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "g8") {
                     let castlingRook = document.querySelector("#h8").querySelector(".black-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#f8").appendChild(clonedRook);
                     clonedRook.classList.add("moved");
                     castlingRook.remove();
+                    audioTake.play();
                 }
 
                 if (clonedElement.classList.contains("white-pawn")) {
@@ -207,8 +223,16 @@ function nextMove(e) {
 
                     if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivLeft && clonedElement.parentElement.id == moveTopLeft) {
                         document.querySelector(".pep").remove();
+                        audioTake.play();
+
+
                     } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivRight && clonedElement.parentElement.id == moveTopRight) {
                         document.querySelector(".pep").remove();
+                        audioTake.play();
+                    } else if ((clonedElement.parentElement.id == moveTopLeft || clonedElement.parentElement.id == moveTopRight) && !nextMove.parentElement.id.includes("8")) {
+                        audioTake.play();
+                    } else if (!nextMove.parentElement.id.includes("8")) {
+                        audioMove.play();
                     }
 
                 }
@@ -221,8 +245,15 @@ function nextMove(e) {
 
                     if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivLeft && clonedElement.parentElement.id == moveTopLeft) {
                         document.querySelector(".pep").remove();
+                        audioTake.play();
+
                     } else if (document.querySelector(".pep") && document.querySelector(".pep").parentElement.id == pepDivRight && clonedElement.parentElement.id == moveTopRight) {
                         document.querySelector(".pep").remove();
+                        audioTake.play();
+                    } else if ((clonedElement.parentElement.id == moveTopLeft || clonedElement.parentElement.id == moveTopRight) && !nextMove.parentElement.id.includes("1")) {
+                        audioTake.play();
+                    } else if (!nextMove.parentElement.id.includes("1")) {
+                        audioMove.play();
                     }
 
                 }
@@ -467,6 +498,10 @@ function nextMove(e) {
     } else if (document.querySelector(".promotion")) {
 
         let promotionSquareId = document.querySelector(".promotion").parentElement.id;
+
+        if (e.target.className.includes("promotion")) {
+            audioMove.play();
+        }
 
         if (e.target.classList.contains("promotion-white-queen")) {
 
