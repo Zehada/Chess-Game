@@ -156,12 +156,11 @@ blackQueen.firstPosition(chessboardLetters[3], "8");
 
 let round = 1;
 
-
-
 document.addEventListener("click", nextMove);
 
 
 function nextMove(e) {
+
 
 
     if (!document.querySelector(".promotion")) {
@@ -383,6 +382,43 @@ function nextMove(e) {
                 blackMove.classList.remove("noblackmove");
             })
 
+
+
+            // Check if checkmate or draw
+            let whitePieces = document.querySelectorAll(".white");
+
+            whitePieces.forEach(whitePiece => {
+                if (whitePiece.classList.contains("white-pawn")) {
+                    whitePawn.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-queen")) {
+                    whiteQueen.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-knight")) {
+                    whiteKnight.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-rook")) {
+                    whiteRook.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-bishop")) {
+                    whiteBishop.move(whitePiece);
+                } else if (whitePiece.classList.contains("white-king")) {
+                    whiteKing.move(whitePiece);
+                }
+            })
+
+
+
+            if (document.querySelector(".next-move")) {
+                let nextMoves = document.querySelectorAll(".next-move");
+                nextMoves.forEach(nextMove => {
+                    nextMove.remove();
+                })
+            } else if (!document.querySelector(".next-move")) {
+                if (document.querySelector(".blackcheck")) {
+                    console.log("Black wins")
+                } else if (!document.querySelector(".blackcheck")) {
+                    console.log("draw")
+                }
+
+            }
+
             if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
                 whitePawn.move(e.target);
             } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
@@ -442,13 +478,43 @@ function nextMove(e) {
             })
 
             // nowhitemove className is for pawn moves that can't take pieces
-
-
             let noWhiteMove = document.querySelectorAll(".nowhitemove");
             noWhiteMove.forEach(whiteMove => {
                 whiteMove.classList.remove("nowhitemove");
             })
 
+
+            // Check if checkmate or draw
+            let blackPieces = document.querySelectorAll(".black");
+            blackPieces.forEach(blackPiece => {
+                if (blackPiece.classList.contains("black-pawn")) {
+                    blackPawn.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-queen")) {
+                    blackQueen.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-knight")) {
+                    blackKnight.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-rook")) {
+                    blackRook.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-bishop")) {
+                    blackBishop.move(blackPiece);
+                } else if (blackPiece.classList.contains("black-king")) {
+                    blackKing.move(blackPiece);
+                }
+            })
+
+            if (document.querySelector(".next-move")) {
+                let nextMoves = document.querySelectorAll(".next-move");
+                nextMoves.forEach(nextMove => {
+                    nextMove.remove();
+                })
+            } else if (!document.querySelector(".next-move")) {
+                if (document.querySelector(".whitecheck")) {
+                    console.log("White wins");
+                } else if (!document.querySelector(".whitecheck")) {
+                    console.log("draw");
+                }
+
+            }
 
 
             if (selectedElement !== null && selectedElement.classList.contains("black-pawn")) {
@@ -563,4 +629,8 @@ function nextMove(e) {
         }
 
     }
-} 
+
+}
+
+
+
