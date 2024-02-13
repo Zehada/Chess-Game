@@ -161,7 +161,7 @@ document.addEventListener("click", nextMove);
 
 function nextMove(e) {
 
-
+    console.log(round)
 
     if (!document.querySelector(".promotion")) {
         let selectedElement = document.querySelector(".selected");
@@ -358,7 +358,10 @@ function nextMove(e) {
             nextMoves.forEach(nextMove => nextMove.remove());
         }
 
+
         if (round % 2 == 1) {
+
+
 
             let blackPieces = document.querySelectorAll(".black");
             blackPieces.forEach(blackPiece => {
@@ -376,6 +379,8 @@ function nextMove(e) {
                     blackKing.move(blackPiece);
                 }
             })
+
+
 
             let noBlackMove = document.querySelectorAll(".noblackmove");
             noBlackMove.forEach(blackMove => {
@@ -421,6 +426,8 @@ function nextMove(e) {
 
             }
 
+
+
             if (selectedElement !== null && selectedElement.classList.contains("white-pawn")) {
                 whitePawn.move(e.target);
             } else if (selectedElement !== null && selectedElement.classList.contains("white-queen")) {
@@ -458,6 +465,8 @@ function nextMove(e) {
                     whiteMove.classList.remove("whitemove");
                 })
             }
+
+
 
         } else if (round % 2 == 0) {
 
@@ -521,6 +530,8 @@ function nextMove(e) {
             }
 
 
+
+
             if (selectedElement !== null && selectedElement.classList.contains("black-pawn")) {
                 blackPawn.move(e.target);
             } else if (selectedElement !== null && selectedElement.classList.contains("black-queen")) {
@@ -559,6 +570,8 @@ function nextMove(e) {
                 })
             }
 
+
+
         }
 
 
@@ -577,28 +590,24 @@ function nextMove(e) {
 
             whiteQueen.initPiece();
             whiteQueen.firstPosition(Array.from(promotionSquareId)[0], "8");
-            whiteQueen.move(document.querySelector("#" + promotionSquareId).querySelector(".white-queen"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-knight")) {
 
             whiteKnight.initPiece();
             whiteKnight.firstPosition(Array.from(promotionSquareId)[0], "8");
-            whiteKnight.move(document.querySelector("#" + promotionSquareId).querySelector(".white-knight"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-rook")) {
 
             whiteRook.initPiece();
             whiteRook.firstPosition(Array.from(promotionSquareId)[0], "8");
-            whiteRook.move(document.querySelector("#" + promotionSquareId).querySelector(".white-rook"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-white-bishop")) {
 
             whiteBishop.initPiece();
             whiteBishop.firstPosition(Array.from(promotionSquareId)[0], "8");
-            whiteBishop.move(document.querySelector("#" + promotionSquareId).querySelector(".white-bishop"));
             document.querySelector(".promotion").remove();
         }
 
@@ -607,33 +616,35 @@ function nextMove(e) {
 
             blackQueen.initPiece();
             blackQueen.firstPosition(Array.from(promotionSquareId)[0], "1");
-            blackQueen.move(document.querySelector("#" + promotionSquareId).querySelector(".black-queen"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-knight")) {
 
             blackKnight.initPiece();
             blackKnight.firstPosition(Array.from(promotionSquareId)[0], "1");
-            blackKnight.move(document.querySelector("#" + promotionSquareId).querySelector(".black-knight"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-rook")) {
 
             blackRook.initPiece();
             blackRook.firstPosition(Array.from(promotionSquareId)[0], "1");
-            blackRook.move(document.querySelector("#" + promotionSquareId).querySelector(".black-rook"));
             document.querySelector(".promotion").remove();
 
         } else if (e.target.classList.contains("promotion-black-bishop")) {
 
             blackBishop.initPiece();
             blackBishop.firstPosition(Array.from(promotionSquareId)[0], "1");
-            blackBishop.move(document.querySelector("#" + promotionSquareId).querySelector(".black-bishop"));
             document.querySelector(".promotion").remove();
         }
 
+        document.querySelector(".chessboard").click();
     }
 
+
+    let selectedElement = document.querySelector(".selected");
+    if (selectedElement == null) {
+        document.querySelector(".chessboard").click(); // All king threatening moves don't show up for some reason
+    }
 }
 
 

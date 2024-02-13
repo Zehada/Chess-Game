@@ -668,7 +668,7 @@ class Piece {
         } else if (!document.querySelector(".blackcheck") && !piece.parentElement.classList.contains("moveoutblack")) {
 
           var nextMoveDiv = document.querySelector("#" + move);
-        } else if (piece.parentElement.classList.contains("moveoutblack") && document.querySelector("#" + move).classList.contains("moveoutblack")) {
+        } else if (piece.parentElement.classList.contains("moveoutblack") && document.querySelector("#" + move).classList.contains("moveoutblack") && !document.querySelector(".blackcheck")) {
           var nextMoveDiv = document.querySelector("#" + move);
         }
 
@@ -682,9 +682,10 @@ class Piece {
         } else if (!document.querySelector(".whitecheck") && !piece.parentElement.classList.contains("moveoutwhite")) {
 
           var nextMoveDiv = document.querySelector("#" + move);
-        } else if (piece.parentElement.classList.contains("moveoutwhite") && document.querySelector("#" + move).classList.contains("moveoutwhite")) {
+        } else if (piece.parentElement.classList.contains("moveoutwhite") && document.querySelector("#" + move).classList.contains("moveoutwhite") && !document.querySelector(".whitecheck")) {
           var nextMoveDiv = document.querySelector("#" + move);
         }
+
         if (this.type == "king") {
           var nextMoveDiv = document.querySelector("#" + move);
         }
