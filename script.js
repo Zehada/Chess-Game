@@ -412,9 +412,11 @@ function nextMove(e) {
                 })
             } else if (!document.querySelector(".next-move")) {
                 if (document.querySelector(".blackcheck")) {
-                    console.log("Black wins")
+                    document.querySelector(".end-message").innerHTML = "Black wins";
+                    document.querySelector(".end-message-box").classList.add("ended");
                 } else if (!document.querySelector(".blackcheck")) {
-                    console.log("draw")
+                    document.querySelector(".end-message").innerHTML = "Draw";
+                    document.querySelector(".end-message-box").classList.add("ended");
                 }
 
             }
@@ -509,9 +511,11 @@ function nextMove(e) {
                 })
             } else if (!document.querySelector(".next-move")) {
                 if (document.querySelector(".whitecheck")) {
-                    console.log("White wins");
+                    document.querySelector(".end-message").innerHTML = "White wins";
+                    document.querySelector(".end-message-box").classList.add("ended");
                 } else if (!document.querySelector(".whitecheck")) {
-                    console.log("draw");
+                    document.querySelector(".end-message").innerHTML = "Draw";
+                    document.querySelector(".end-message-box").classList.add("ended");
                 }
 
             }

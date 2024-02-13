@@ -13,6 +13,7 @@ body {
     background-color: slateblue;
 
     .chessboard {
+        position: relative;
         display: grid;
         grid-template-columns: repeat(8, 1fr);
         grid-template-rows: repeat(8, 1fr);
@@ -21,6 +22,37 @@ body {
         max-width: 90vh;
         max-height: 90vh;
         aspect-ratio: 1 / 1;
+
+        .end-message-box {
+            width: 0;
+            height: 9vw;
+            background-color: rgba(0, 0, 0, 0.616);
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 10;
+            overflow: hidden;
+            transition: width 0.5s;
+
+        }
+
+        .end-message-box.ended {
+            width: 100%;
+        }
+
+        .end-message-div {
+            position: absolute;
+            width: 100vw;
+        }
+
+        .end-message {
+            color: white;
+            font-size: 3vw;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
 
 
         div {
@@ -59,14 +91,6 @@ body {
 
             }
 
-        }
-
-        .whitemove {
-            background-color: rgba(0, 255, 255, 0.432) !important;
-        }
-
-        .blackmove {
-            background-color: rgba(21, 255, 0, 0.432) !important;
         }
 
     }
