@@ -161,8 +161,6 @@ document.addEventListener("click", nextMove);
 
 function nextMove(e) {
 
-    console.log(round)
-
     if (!document.querySelector(".promotion")) {
         let selectedElement = document.querySelector(".selected");
         let nextMoves = document.querySelectorAll(".next-move");
@@ -182,14 +180,15 @@ function nextMove(e) {
                 }
                 nextMove.parentElement.appendChild(clonedElement);
 
-                if (clonedElement.classList.contains("white-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "c1") {
+
+                if (clonedElement.classList.contains("white-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "c1" && document.querySelector("#a1").querySelector(".white-rook")) {
                     let castlingRook = document.querySelector("#a1").querySelector(".white-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#d1").appendChild(clonedRook);
                     clonedRook.classList.add("moved");
                     castlingRook.remove();
                     audioTake.play();
-                } else if (clonedElement.classList.contains("white-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "g1") {
+                } else if (clonedElement.classList.contains("white-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "g1" && document.querySelector("#h1").querySelector(".white-rook")) {
                     let castlingRook = document.querySelector("#h1").querySelector(".white-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#f1").appendChild(clonedRook);
@@ -198,14 +197,14 @@ function nextMove(e) {
                     audioTake.play();
                 }
 
-                if (clonedElement.classList.contains("black-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "c8") {
+                if (clonedElement.classList.contains("black-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "c8" && document.querySelector("#a8").querySelector(".black-rook")) {
                     let castlingRook = document.querySelector("#a8").querySelector(".black-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#d8").appendChild(clonedRook);
                     clonedRook.classList.add("moved");
                     castlingRook.remove();
                     audioTake.play();
-                } else if (clonedElement.classList.contains("black-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "g8") {
+                } else if (clonedElement.classList.contains("black-king") && !selectedElement.classList.contains("moved") && nextMove.parentElement.id == "g8" && document.querySelector("#h8").querySelector(".black-rook")) {
                     let castlingRook = document.querySelector("#h8").querySelector(".black-rook");
                     let clonedRook = castlingRook.cloneNode();
                     document.querySelector("#f8").appendChild(clonedRook);
@@ -357,7 +356,6 @@ function nextMove(e) {
             selectedElement = document.querySelector(".selected");
             nextMoves.forEach(nextMove => nextMove.remove());
         }
-
 
         if (round % 2 == 1) {
 
